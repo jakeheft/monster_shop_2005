@@ -36,4 +36,21 @@ describe 'As a merchant employee' do
       expect(page).to have_content("Logged in as #{jake.name}")
     end
   end
+  describe "When I try to access any path that begins with the following, then I see a 404 error:" do
+    it "'/admin'" do
+      jake = User.create!(name: 'JakeBob',
+        address: '124 Main St',
+        city: 'Denver',
+        state: 'Colorado',
+        zip: '80202',
+        email: 'JBob1234@hotmail.com',
+        password: 'heftybags',
+        password_confirmation: 'heftybags',
+        role: 1)
+
+      visit "/admin"
+
+      expect(page).to have_content("The page you were looking for doesn't exist (404)")
+    end
+  end
 end
