@@ -68,4 +68,30 @@ describe "As a visitor" do
       expect(page).to have_content("You are now logged in")
     end
   end
+
+  describe "When I log in with bad credentials" do
+    it "I am redirected to the login page and informed of invalid credentials" do
+      user = User.create(
+        name: 'JakeBob',
+        address: '124 Main St',
+        city: 'Denver',
+        state: 'Colorado',
+        zip: '80202',
+        email: 'JBob1234@hotmail.com',
+        password: 'heftybags',
+        password_confirmation: 'heftybags',
+        role: 1
+      )
+
+      visit "/login"
+
+      fill_in :email, with: "JBob1234@hotmail.com"
+      fill_in :password, with: "heftybag"
+
+      click_button "Login"
+
+      expect(current_path).to eq("/login")
+      expect(page).to have_content("Username and/or password is incorrect")
+    end
+  end
 end
