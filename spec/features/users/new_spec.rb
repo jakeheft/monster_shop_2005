@@ -67,7 +67,7 @@ describe "As a visitor" do
         click_button "Register"
 
         expect(current_path).to eq("/register")
-        expect(page).to have_content("You are missing required field(s)")
+        expect(page).to have_content("State can't be blank")
       end
     end
   end
@@ -110,13 +110,32 @@ describe "As a visitor" do
 
         expect(current_path).to eq("/register")
 
-        expect(page).to have_content("That email address is already in use!")
+        expect(page).to have_content("Email has already been taken")
         expect(find_field(:name).value).to have_content('JimBob')
         expect(find_field(:address).value).to have_content('123 Main St')
         expect(find_field(:city).value).to have_content('Denver')
         expect(find_field(:state).value).to have_content('Colorado')
         expect(find_field(:zip).value).to have_content('80202')
       end
+    end
+  end
+
+  describe "When I create a user" do
+    it "password and password confirmation must match" do
+      visit '/register'
+      fill_in :name, with: 'JimBob'
+      fill_in :address, with: '123 Main St'
+      fill_in :city, with: 'Denver'
+      fill_in :state, with: 'Colorado'
+      fill_in :zip, with: '80202'
+      fill_in :email, with: 'JBob1234@hotmail.com'
+      fill_in :password, with: 'somethingdiff'
+      fill_in :password_confirmation, with: 'somethingDiff'
+
+      click_button "Register"
+
+      expect(current_path).to eq("/register")
+      expect(page).to have_content("Password confirmation doesn't match Password")
     end
   end
 end
