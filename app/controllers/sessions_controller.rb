@@ -7,9 +7,9 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email])
     session[:user_id] = user.id
     flash[:success] = "You are now logged in"
-    if user.role == 3
+    if user.role == "admin"
       redirect_to "/admin"
-    elsif user.role == 2
+    elsif user.role == "merchant"
       redirect_to "/merchant"
     else
       redirect_to '/profile'
