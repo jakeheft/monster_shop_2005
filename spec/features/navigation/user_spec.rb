@@ -15,18 +15,17 @@ describe 'As a default user' do
                           password_confirmation: 'heftybags')
 
       visit '/login'
-      fill_in :username, with: jake.email
+      fill_in :email, with: jake.email
       fill_in :password, with: jake.password
 
-      find("#login_button").click
-
+      
       expect(page).to have_link('Home')
       expect(page).to have_link('All Items')
       expect(page).to have_link('All Merchants')
       expect(page).to have_link('Cart')
-      expect(page).to have_link('Log In')
       expect(page).to have_link('Register')
       expect(page).to have_content('0')
+      click_on "Login"
       expect(page).to have_link('My Profile')
       expect(page).to have_link('Log Out')
       expect(page).not_to have_link('Log In')
