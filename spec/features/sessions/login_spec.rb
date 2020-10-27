@@ -146,8 +146,54 @@ describe "As an already registered visitor" do
       expect(page).to have_content("You are already logged in")
 
     end
+
+    it "As a merchant user I'm redirected to my dashboard and informed I'm logged in" do
+      merchant_user = User.create(
+        name: 'JakeBob',
+        address: '124 Main St',
+        city: 'Denver',
+        state: 'Colorado',
+        zip: '80202',
+        email: 'JBob1234@hotmail.com',
+        password: 'heftybags',
+        password_confirmation: 'heftybags',
+        role: 1
+      )
+      visit "/login"
+
+      fill_in :email, with: "JBob1234@hotmail.com"
+      fill_in :password, with: "heftybags"
+      click_button "Login"
+
+      visit "/login"
+
+      expect(current_path).to eq("/merchant")
+      expect(page).to have_content("You are already logged in")
+
+    end
+
+    it "As a admin user I'm redirected to my dashboard and informed I'm logged in" do
+      admin = User.create(
+        name: 'JakeBob',
+        address: '124 Main St',
+        city: 'Denver',
+        state: 'Colorado',
+        zip: '80202',
+        email: 'JBob1234@hotmail.com',
+        password: 'heftybags',
+        password_confirmation: 'heftybags',
+        role: 2
+      )
+      visit "/login"
+
+      fill_in :email, with: "JBob1234@hotmail.com"
+      fill_in :password, with: "heftybags"
+      click_button "Login"
+
+      visit "/login"
+
+      expect(current_path).to eq("/admin")
+      expect(page).to have_content("You are already logged in")
+    end
   end
 end
-# If I am a merchant user, I am redirected to my merchant dashboard page
-# If I am an admin user, I am redirected to my admin dashboard page
-# And I see a flash message that tells me I am already logged in
