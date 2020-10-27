@@ -119,3 +119,35 @@ describe "As a visitor" do
     end
   end
 end
+
+describe "As an already registered visitor" do
+  describe "When I visit the login path" do
+    it "As a regular user I'm redirected to my profile page and informed I'm logged in" do
+      user = User.create(
+        name: 'JakeBob',
+        address: '124 Main St',
+        city: 'Denver',
+        state: 'Colorado',
+        zip: '80202',
+        email: 'JBob1234@hotmail.com',
+        password: 'heftybags',
+        password_confirmation: 'heftybags',
+        role: 0
+      )
+      visit "/login"
+
+      fill_in :email, with: "JBob1234@hotmail.com"
+      fill_in :password, with: "heftybags"
+      click_button "Login"
+
+      visit "/login"
+
+      expect(current_path).to eq("/profile")
+      expect(page).to have_content("You are already logged in")
+
+    end
+  end
+end
+# If I am a merchant user, I am redirected to my merchant dashboard page
+# If I am an admin user, I am redirected to my admin dashboard page
+# And I see a flash message that tells me I am already logged in
