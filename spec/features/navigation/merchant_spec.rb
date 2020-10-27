@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-describe 'As a default user' do
-  describe 'I see the same links as a visitor' do
-    it 'Plus the following links a link to my profile page (/profile),a link to log out (/logout)' do
+describe 'As a merchant employee' do
+  describe 'I see the same links as a regular user' do
+    it 'Plus the following link: a link to my merchant dashboard ("/merchant")' do
       jake = User.create!(name: 'JakeBob',
                           address: '124 Main St',
                           city: 'Denver',
