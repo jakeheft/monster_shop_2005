@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < UserBaseController
 
   def new
     @new_user = User.new(user_params)
