@@ -1,7 +1,13 @@
 class SessionsController < ApplicationController
   def new
-      if current_user
+    if current_user
+      if current_user.role == "merchant"
+        redirect_to "/merchant", notice: "You are already logged in"
+      elsif current_user.role == "admin"
+        redirect_to "/admin", notice: "You are already logged in"
+      else
         redirect_to "/profile", notice: "You are already logged in"
+      end
     end
   end
 
