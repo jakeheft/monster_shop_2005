@@ -93,7 +93,8 @@ describe "As a visitor" do
                            zip: '80202',
                            email: 'JBob1234@hotmail.com',
                            password: 'heftybags',
-                           password_confirmation: 'heftybags'
+                           password_confirmation: 'heftybags',
+                           role: 0
                           )
 
         visit '/register'

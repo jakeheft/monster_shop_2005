@@ -10,6 +10,7 @@ describe User, type: :model do
                        zip: '80202',
                        email: 'JBob1234@hotmail.com',
                        password: 'heftybags',
+                       role: 0
                       )
 
       expect(User.find_by(name: "JakeBob")).to eq(nil)
@@ -25,7 +26,8 @@ describe User, type: :model do
                          zip: '80202',
                          email: 'JBob1234@hotmail.com',
                          password: 'heftybags',
-                         password_confirmation: 'heftybags'
+                         password_confirmation: 'heftybags',
+                         role: 0
                         )
       expect(jake.valid_email).to eq(false)
     end
