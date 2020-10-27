@@ -12,7 +12,7 @@ describe "As a visitor" do
         email: 'JBob1234@hotmail.com',
         password: 'heftybags',
         password_confirmation: 'heftybags',
-        role: 1
+        role: 0
       )
 
       visit "/login"
@@ -34,7 +34,7 @@ describe "As a visitor" do
         email: 'buymystuff@hotmail.com',
         password: 'merchantsrock',
         password_confirmation: 'merchantsrock',
-        role: 2
+        role: 1
       )
       visit "/login"
 
@@ -56,7 +56,7 @@ describe "As a visitor" do
         email: 'icontroleverything@hotmail.com',
         password: 'adminadmin',
         password_confirmation: 'adminadmin',
-        role: 3
+        role: 2
       )
       visit "/login"
 
@@ -80,7 +80,7 @@ describe "As a visitor" do
         email: 'JBob1234@hotmail.com',
         password: 'heftybags',
         password_confirmation: 'heftybags',
-        role: 1
+        role: 0
       )
 
       visit "/login"
