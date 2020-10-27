@@ -19,4 +19,19 @@ describe 'As a visitor' do
        expect(page).to have_content("0")
      end
   end
+  describe "When I try to access any path that begins with the following, then I see a 404 error:" do
+    it "'/merchant'/admin'/profile'" do
+      visit "/merchant"
+
+      expect(page).to have_content("The page you were looking for doesn't exist (404)")
+
+      visit "/admin"
+
+      expect(page).to have_content("The page you were looking for doesn't exist (404)")
+
+      visit "/profile"
+
+      expect(page).to have_content("The page you were looking for doesn't exist (404)")
+    end
+  end
 end
