@@ -12,7 +12,7 @@ describe "As a visitor" do
         email: 'JBob1234@hotmail.com',
         password: 'heftybags',
         password_confirmation: 'heftybags',
-        role: 1
+        role: 0
       )
 
       visit "/login"
@@ -34,7 +34,7 @@ describe "As a visitor" do
         email: 'buymystuff@hotmail.com',
         password: 'merchantsrock',
         password_confirmation: 'merchantsrock',
-        role: 2
+        role: 1
       )
       visit "/login"
 
@@ -56,7 +56,7 @@ describe "As a visitor" do
         email: 'icontroleverything@hotmail.com',
         password: 'adminadmin',
         password_confirmation: 'adminadmin',
-        role: 3
+        role: 2
       )
       visit "/login"
 
@@ -70,8 +70,8 @@ describe "As a visitor" do
   end
 
   describe "When I log in with bad credentials" do
-    it "I am redirected to the login page and informed of invalid credentials" do
-      user = User.create(
+    it "With a bad password I am redirected to the login page and informed of invalid credentials" do
+      user = User.create!(
         name: 'JakeBob',
         address: '124 Main St',
         city: 'Denver',
@@ -80,13 +80,37 @@ describe "As a visitor" do
         email: 'JBob1234@hotmail.com',
         password: 'heftybags',
         password_confirmation: 'heftybags',
-        role: 1
+        role: 0
       )
 
       visit "/login"
 
       fill_in :email, with: "JBob1234@hotmail.com"
       fill_in :password, with: "heftybag"
+
+      click_button "Login"
+
+      expect(current_path).to eq("/login")
+      expect(page).to have_content("Username and/or password is incorrect")
+    end
+
+    it "With a bad email I am redirected to the login page and informed of invalid credentials" do
+      user = User.create!(
+        name: 'JakeBob',
+        address: '124 Main St',
+        city: 'Denver',
+        state: 'Colorado',
+        zip: '80202',
+        email: 'JBob1234@hotmail.com',
+        password: 'heftybags',
+        password_confirmation: 'heftybags',
+        role: 0
+      )
+
+      visit "/login"
+
+      fill_in :email, with: "JBlob1234@hotmail.com"
+      fill_in :password, with: "heftybags"
 
       click_button "Login"
 
