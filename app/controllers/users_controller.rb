@@ -8,11 +8,9 @@ class UsersController < ApplicationController
     @new_user = User.new(user_params)
     if @new_user.save
       redirect_to '/profile', notice: "You are now registered and logged in"
-    elsif @new_user.valid_email == false
-      flash[:notice] = "That email address is already in use!"
-      render :new
     else
-      redirect_to '/register', notice: "You are missing required field(s)"
+      flash[:error] = @new_user.errors.full_messages[0]
+      render :new
     end
   end
 
