@@ -25,7 +25,7 @@ describe "As a visitor" do
     end
 
     it "as a merchant user, I am redirected to my merchant dashboard" do
-      merchant = User.create!(
+      merchant_user = User.create!(
         name: 'Mark Merchant',
         address: '124 Main St',
         city: 'Denver',
@@ -41,7 +41,7 @@ describe "As a visitor" do
       fill_in :email, with: "buymystuff@hotmail.com"
       fill_in :password, with: "merchantsrock"
       click_button "Login"
-      save_and_open_page
+
       expect(current_path).to eq("/merchant")
       expect(page).to have_content("You are now logged in")
     end
@@ -63,13 +63,9 @@ describe "As a visitor" do
       fill_in :email, with: "icontroleverything@hotmail.com"
       fill_in :password, with: "adminadmin"
       click_button "Login"
-      
+
       expect(current_path).to eq("/admin")
       expect(page).to have_content("You are now logged in")
     end
   end
 end
-
-# If I am a merchant user, I am redirected to my merchant dashboard page
-# If I am an admin user, I am redirected to my admin dashboard page
-# And I see a flash message that I am logged in
