@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'mocha'
 
 describe 'As an admin' do
   describe 'I see the same links as a regular user' do
