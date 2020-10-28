@@ -49,6 +49,10 @@ Rails.application.routes.draw do
   get "/profile", to: "users_dashboard#show"
   get "/profile/edit", to: "users_dashboard#edit"
   patch "/profile", to: "users_dashboard#update"
+  get "/profile/password", to: "users_dashboard#password"
+  patch "/profile/password", to: "users_dashboard#password_update"
+  
+
 
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
