@@ -50,5 +50,30 @@ describe "As a registered user" do
       click_link('Edit Profile')
       expect(current_path).to eq('/profile/edit')
     end
+
+     it "I click the link to change password and I'm taken to a page to 
+     edit my password with a form with fields for new password and confirmation" do
+      jake = User.create!( name: 'JakeBob',
+                           address: '124 Main St',
+                           city: 'Denver',
+                           state: 'Colorado',
+                           zip: '80202',
+                           email: 'JBob1234@hotmail.com',
+                           password: 'heftybags',
+                           password_confirmation: 'heftybags',
+                           role: 0
+                          )
+
+      visit '/login'
+
+      fill_in :email, with: 'JBob1234@hotmail.com'
+      fill_in :password, with: 'heftybags'
+      click_button 'Login'
+
+      visit '/profile'
+
+      click_link('Edit Password')
+      expect(current_path).to eq('/profile/password')
+    end
   end
 end
