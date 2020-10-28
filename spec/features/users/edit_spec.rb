@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe "As a registered user" do
   describe "When I visit my edit profile page" do
     it "I see all fields populated with current info and 
@@ -32,6 +34,42 @@ describe "As a registered user" do
       expect(current_path).to eq('/profile')
       expect(page).to have_content('Your profile has been updated')
       expect(page).to have_content('Name: edittest')
+    end
+
+    it "Email address must not belong to another user " do
+      jake = User.create!( name: 'JakeBob',
+                           address: '124 Main St',
+                           city: 'Denver',
+                           state: 'Colorado',
+                           zip: '80202',
+                           email: 'JBob1234@hotmail.com',
+                           password: 'heftybags',
+                           password_confirmation: 'heftybags',
+                           role: 0
+                          )
+      garrett = User.create!( name: 'GarrettBob',
+                              address: '129 Main St',
+                              city: 'Denver',
+                              state: 'Colorado',
+                              zip: '80202',
+                              email: 'garrettbob@gmail.com',
+                              password: 'test',
+                              password_confirmation: 'test',
+                              role: 0
+                          )
+
+      visit '/login'
+
+      fill_in :email, with: 'JBob1234@hotmail.com'
+      fill_in :password, with: 'heftybags'
+      click_button 'Login'
+
+      visit '/profile/edit'
+
+      fill_in :email, with: 'garrettbob@gmail.com'
+      click_button 'Update Profile'
+      expect(current_path).to eq('/profile/edit')
+      expect(page).to have_content('Email has already been taken')
     end
   end
 end
