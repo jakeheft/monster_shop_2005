@@ -1,9 +1,9 @@
 class SessionsController < ApplicationController
   def new
     if current_user
-      if current_user.role == "merchant"
+      if current_user.merchant?
         redirect_to "/merchant", notice: "You are already logged in"
-      elsif current_user.role == "admin"
+      elsif current_user.admin?
         redirect_to "/admin", notice: "You are already logged in"
       else
         redirect_to "/profile", notice: "You are already logged in"
@@ -19,9 +19,9 @@ class SessionsController < ApplicationController
     elsif user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:success] = "You are now logged in"
-      if user.role == "admin"
+      if user.admin?
         redirect_to "/admin"
-      elsif user.role == "merchant"
+      elsif user.merchant?
         redirect_to "/merchant"
       else
         redirect_to '/profile'
@@ -34,6 +34,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    session[:cart].clear
     flash[:success] = "You have successfully logged out"
     redirect_to '/'
   end
