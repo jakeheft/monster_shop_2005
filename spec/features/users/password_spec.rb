@@ -19,7 +19,7 @@ describe "As a registered user" do
       fill_in :password, with: 'heftybags'
       click_button 'Login'
 
-      visit '/profile/password'
+      visit '/password/edit'
       fill_in :password, with: "testpassword"
       fill_in :password_confirmation, with: 'testpassword'
       click_button 'Change Password'
@@ -45,9 +45,9 @@ describe "As a registered user" do
       fill_in :email, with: 'JBob1234@hotmail.com'
       fill_in :password, with: 'heftybags'
       click_button 'Login'
-      visit '/profile/password'
+      visit '/password/edit'
       click_button 'Change Password'
-      expect(current_path).to eq('/profile/password')
+      expect(current_path).to eq('/password/edit')
       expect(page).to have_content("Password confirmation doesn't match Password")
     end
   end

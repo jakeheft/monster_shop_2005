@@ -73,7 +73,7 @@ describe "As a registered user" do
       visit '/profile'
 
       click_link('Edit Password')
-      expect(current_path).to eq('/profile/password')
+      expect(current_path).to eq('/password/edit')
     end
   end
 end
