@@ -15,8 +15,13 @@ class UsersDashboardController < UserBaseController
   end
 
   def password_update
-    @current_user.update!(password_params)
-    redirect_to '/profile', notice: 'Your password has been changed'
+    @current_user.assign_attributes(password_params)
+    if @current_user.save
+      redirect_to '/profile', notice: 'Your password has been changed'
+    else
+      flash[:error] = @current_user.errors.full_messages.uniq
+      redirect_to '/profile/password'
+    end
   end
 
   private
