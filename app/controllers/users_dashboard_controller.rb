@@ -6,9 +6,13 @@ class UsersDashboardController < UserBaseController
   end
 
   def update 
-    user = User.find_by(email: params[:email])
-    user.update!(user_params)
-    redirect_to '/profile', notice: 'Your profile has been updated'
+    @current_user.assign_attributes(user_params)
+    if @current_user.save
+      redirect_to '/profile', notice: 'Your profile has been updated'
+    else
+      flash[:error] = @current_user.errors.full_messages.uniq
+      redirect_to '/profile/edit'
+    end
   end
 
   private
