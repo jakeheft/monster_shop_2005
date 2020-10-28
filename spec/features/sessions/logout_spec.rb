@@ -21,10 +21,10 @@ describe "As a logged in user, merchant, or admin" do
       fill_in :password, with: "heftybags"
       click_button "Login"
 
-      click_link "Logout"
+      click_link "Log Out"
 
       expect(current_path).to eq("/")
-      expect(page).to eq("You are now logged out")
+      expect(page).to have_content("You have successfully logged out")
     end
   end
 end
