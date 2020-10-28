@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'mocha'
 
 describe 'As an admin' do
   describe 'I see the same links as a regular user' do
@@ -49,6 +50,7 @@ describe 'As an admin' do
                           password_confirmation: 'heftybags',
                           role: 2)
 
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(jake)
       visit "/merchant"
 
       expect(page).to have_content("The page you were looking for doesn't exist (404)")
