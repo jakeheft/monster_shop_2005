@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     if @new_user.save
       redirect_to '/profile', notice: "You are now registered and logged in"
     else
-      flash[:error] = @new_user.errors.full_messages[0]
+      flash[:error] = @new_user.errors.full_messages.uniq
       render :new
     end
   end
