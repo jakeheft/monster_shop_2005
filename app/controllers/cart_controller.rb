@@ -20,5 +20,12 @@ class CartController < CartBaseController
     redirect_to '/cart'
   end
 
+  def modify_quantity
+    item = Item.find(params[:item_id])
+    cart.add_item(item.id.to_s)
+    flash[:success] = "Another #{item.name} was successfully added to your cart"
+    redirect_to "/cart"
+  end
+
 
 end
