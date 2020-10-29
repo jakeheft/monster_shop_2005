@@ -37,3 +37,25 @@ RSpec.describe 'Cart show' do
     end
   end
 end
+
+describe "As a visitor" do
+  describe "When I visit my cart with items in it" do
+    it "It tells me I must register or log in to checkout with links for each" do
+      dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+      item = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+
+      visit "/items/#{item.id}"
+
+      click_on "Add To Cart"
+      expect(page).to have_content("Cart: 1")
+
+      click_on "Cart"
+
+      expect(page).to_not have_link("Checkout")
+      expect(page).to have_content("You must register or log in to checkout")
+      expect(page).to have_link("register")
+      expect(page).to have_link("log in")
+
+    end
+  end
+end
