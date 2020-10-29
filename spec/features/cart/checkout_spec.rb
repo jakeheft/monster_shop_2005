@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Cart show' do
-  describe 'When I have added items to my cart' do
+  describe 'When I have added items to my cart as a user' do
     before(:each) do
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -19,6 +19,19 @@ RSpec.describe 'Cart show' do
     end
 
     it 'Theres a link to checkout' do
+      user = User.create(
+        name: 'JakeBob',
+        address: '124 Main St',
+        city: 'Denver',
+        state: 'Colorado',
+        zip: '80202',
+        email: 'JBob1234@hotmail.com',
+        password: 'heftybags',
+        password_confirmation: 'heftybags',
+        role: 0
+      )
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
       visit "/cart"
 
       expect(page).to have_link("Checkout")
@@ -50,12 +63,11 @@ describe "As a visitor" do
       expect(page).to have_content("Cart: 1")
 
       click_on "Cart"
-
+      
       expect(page).to_not have_link("Checkout")
       expect(page).to have_content("You must register or log in to checkout")
       expect(page).to have_link("register")
       expect(page).to have_link("log in")
-
     end
   end
 end
