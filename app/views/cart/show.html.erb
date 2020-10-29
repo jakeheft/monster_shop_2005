@@ -31,6 +31,7 @@
       <td>
         <center>
           <p><%=quantity%></p>
+          <p><%= button_to "+", "/cart/#{item.id}",params: {'operation' => "add"}, method: :patch %></p>
           <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
         </center>
         </td>
