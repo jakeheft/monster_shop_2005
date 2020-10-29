@@ -1,5 +1,5 @@
 <body>
-  <%= form_tag("/register", method: :post) do  %>
+  <%= form_tag("/users", method: :post) do  %>
     <%= label_tag(:name) %>
     <%= text_field_tag(:name, "#{@new_user.name}") %>
 

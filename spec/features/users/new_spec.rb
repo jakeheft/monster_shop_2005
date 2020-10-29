@@ -66,7 +66,7 @@ describe "As a visitor" do
 
         click_button "Register"
 
-        expect(current_path).to eq("/register")
+        expect(current_path).to eq("/users")
         expect(page).to have_content("State can't be blank")
       end
     end
@@ -109,7 +109,7 @@ describe "As a visitor" do
 
         click_button "Register"
 
-        expect(current_path).to eq("/register")
+        expect(current_path).to eq("/users")
 
         expect(page).to have_content("Email has already been taken")
         expect(find_field(:name).value).to have_content('JimBob')
@@ -135,7 +135,7 @@ describe "As a visitor" do
 
       click_button "Register"
 
-      expect(current_path).to eq("/register")
+      expect(current_path).to eq("/users")
       expect(page).to have_content("Password confirmation doesn't match Password")
     end
   end
