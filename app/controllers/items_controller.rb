@@ -5,12 +5,13 @@ class ItemsController<ApplicationController
       @merchant = Merchant.find(params[:merchant_id])
       @items = @merchant.items
     else
-      @items = Item.all
+      @items = Item.find_enabled_items
     end
   end
 
   def show
     @item = Item.find(params[:id])
+
   end
 
   def new
