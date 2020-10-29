@@ -25,4 +25,15 @@ class Item <ApplicationRecord
     item_orders.empty?
   end
 
+  def self.find_enabled_items
+    Item.where(active?: true)
+  end
+
+  def self.top_five
+    Item.joins(:item_orders).select('items.name, item_orders.quantity').order('quantity desc').limit(5)
+  end
+
+  def self.bottom_five
+    Item.joins(:item_orders).select('items.name, item_orders.quantity').order('quantity asc').limit(5)
+  end
 end
