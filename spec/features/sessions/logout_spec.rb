@@ -1,9 +1,8 @@
 require "rails_helper"
 
-### Come back to this to add cleared shopping cart
 describe "As a logged in user, merchant, or admin" do
   describe "When I visit the logout path, I am redirected to the home page" do
-    it "I see a flash message that I'm logged out" do
+    it "I see a flash message that I'm logged out and all cart items are deleted" do
       user = User.create(
         name: 'JakeBob',
         address: '124 Main St',
