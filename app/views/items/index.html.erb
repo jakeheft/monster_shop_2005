@@ -7,14 +7,14 @@
 <table class= "Show" id= 'popularity_table'>
   <tr>
     <td>Most Popular Items:</td>
-    <td><%= Item.top_five.each do |item| %></td>
+    <td><% Item.top_five.each do |item| %></td>
     <td><%=item.name  %>:</td>
     <td><%= item.quantity %></td>
     <% end %>
   </tr>
   <tr>
     <td>Least Popular Items:</td>
-    <td><%= Item.bottom_five.each do |item| %></td>
+    <td><% Item.bottom_five.each do |item| %></td>
     <td><%=item.name  %>:</td>
     <td><%= item.quantity %></td>
     <% end %>

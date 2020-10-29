@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   enum role: %w(user merchant admin)
 
-  def valid_email ####
+  def valid_email
     return false if User.find_by(email: self.email)
   end
 end
