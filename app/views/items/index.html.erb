@@ -4,6 +4,24 @@
 <% else %>
   <h1>All Items</h1>
 <% end %>
+<table class= "Show" id= 'popularity_table'>
+  <tr>
+    <td>Most Popular Items:</td>
+    <td><% Item.top_five.each do |item| %></td>
+    <td><%=item.name  %>:</td>
+    <td><%= item.quantity %></td>
+    <% end %>
+  </tr>
+  <tr>
+    <td>Least Popular Items:</td>
+    <td><% Item.bottom_five.each do |item| %></td>
+    <td><%=item.name  %>:</td>
+    <td><%= item.quantity %></td>
+    <% end %>
+  </tr>
+  <tr>
+</table>
+
 <section class="grid-container">
   <% @items.each do |item| %>
     <section class = "grid-item" id= 'item-<%=item.id%>'>

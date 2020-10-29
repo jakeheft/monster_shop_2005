@@ -47,5 +47,27 @@ describe Item, type: :model do
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
+
+    describe "class methods" do
+      before(:each) do
+        @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+        @chain = @bike_shop.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
+        @string = @bike_shop.items.create(name: "String", description: "It'll probably break!", price: 5, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", active?: false, inventory: 5)
+        order = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+        order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
+        order.item_orders.create(item: @string, price: @string.price, quantity: 1)
+      end
+      it 'find_enabled_items' do
+        expect(Item.find_enabled_items.first.name).to eq(@chain.name)
+      end
+
+      it 'top_five' do
+        expect(Item.top_five.first.name).to eq(@chain.name)
+      end
+
+      it 'bottom_five' do
+        expect(Item.bottom_five.first.name).to eq(@string.name)
+      end
+    end
   end
 end
