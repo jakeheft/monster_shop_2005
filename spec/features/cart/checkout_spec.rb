@@ -117,7 +117,12 @@ describe "As a user" do
         dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
         item = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 
-        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+        visit "/login"
+
+        fill_in :email, with: "JBob1234@hotmail.com"
+        fill_in :password, with: "heftybags"
+        click_button "Login"
+        # allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
         # allow_any_instance_of(ApplicationController).to receive(:cart).and_return({item.id => 1})
         visit "/items/#{item.id}"
 
@@ -140,13 +145,26 @@ describe "As a user" do
         expect(new_order.status).to eq("Pending")
         expect(new_order.user).to eq(user)
         expect(page).to have_content("Your order has been created")
-        within "#item-#{item_order.item_id}" do
-          expect(page).to have_content(item.name)
-          expect(page).to have_content(dog_shop.name)
-          expect(page).to have_content(item.price)
-          expect(page).to have_content(item_order.quantity)
-          expect(page).to have_content(item_order.subtotal)
+
+        within "#item-#{item.id}" do
+          expect(page).to have_link(item.name)
+          expect(page).to have_link("#{item.merchant.name}")
+          expect(page).to have_content("$#{item.price}")
+          expect(page).to have_content("1")
+          expect(page).to have_content("$10")
         end
+        within "#grandtotal" do
+          expect(page).to have_content("Total: $10")
+        end
+
+        within "#datecreated" do
+          expect(page).to have_content(new_order.created_at)
+        end
+        # within "#item-#{new_order.id}" do
+        #   expect(page).to have_content(item.name)
+        #   expect(page).to have_content(item.price)
+        #   expect(page).to have_content(new_order.grandtotal)
+        # end
         expect(page).to have_content("Cart: 0")
       end
     end
