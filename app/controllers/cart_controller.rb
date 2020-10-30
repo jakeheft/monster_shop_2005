@@ -22,9 +22,27 @@ class CartController < CartBaseController
 
   def modify_quantity
     item = Item.find(params[:item_id])
-    cart.add_item(item.id.to_s)
-    flash[:success] = "Another #{item.name} was successfully added to your cart"
-    redirect_to "/cart"
+
+    if params[:operation] == "add"
+      if item.inventory > session[:cart][item.id.to_s]
+        cart.add_item(item.id.to_s)
+        flash[:success] = "Another #{item.name} was successfully added to your cart"
+        redirect_to "/cart"
+      else
+        flash[:notice] = "Not Enough Inventory for #{item.name}"
+        redirect_to "/cart"
+      end
+    elsif params[:operation] == "subtract"
+      if session[:cart][item.id.to_s] > 1
+        cart.subtract_item(item.id.to_s)
+        flash[:success] = "A #{item.name} was successfully removed from your cart"
+        redirect_to "/cart"
+      else
+        session[:cart].delete(params[:item_id])
+        flash[:success] = "#{item.name} was successfully removed from your cart"
+        redirect_to '/cart'
+      end
+    end
   end
 
 
