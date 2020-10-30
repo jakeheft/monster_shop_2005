@@ -81,12 +81,11 @@ RSpec.describe "As a admin" do
       click_button "Create Order"
 
       visit "/merchants/#{meg.id}"
-      ### COME BACK TO THIS: should this link exist or not??
-      # expect(page).to_not have_link("Delete Merchant")
+      expect(page).to_not have_link("Delete Merchant")
 
 
-      # visit "/merchants/#{brian.id}"
-      # expect(page).to have_link("Delete Merchant")
+      visit "/merchants/#{brian.id}"
+      expect(page).to have_link("Delete Merchant")
     end
   end
 end
