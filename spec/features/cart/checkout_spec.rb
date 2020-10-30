@@ -63,11 +63,43 @@ describe "As a visitor" do
       expect(page).to have_content("Cart: 1")
 
       click_on "Cart"
-      
+
       expect(page).to_not have_link("Checkout")
       expect(page).to have_content("You must register or log in to checkout")
       expect(page).to have_link("register")
       expect(page).to have_link("log in")
+    end
+  end
+end
+
+describe "As a user" do
+  describe "When I visit my cart with items in it" do
+    it "I click checkout and am redirected to a form to fill out order info" do
+      user = User.create(
+        name: 'JakeBob',
+        address: '124 Main St',
+        city: 'Denver',
+        state: 'Colorado',
+        zip: '80202',
+        email: 'JBob1234@hotmail.com',
+        password: 'heftybags',
+        password_confirmation: 'heftybags',
+        role: 0
+      )
+      dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+      item = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+      # allow_any_instance_of(ApplicationController).to receive(:cart).and_return({item.id => 1})
+      visit "/items/#{item.id}"
+
+      click_on "Add To Cart"
+
+      visit cart_path
+
+      click_on "Checkout"
+
+      expect(current_path).to eq("/orders/new")
     end
   end
 end
