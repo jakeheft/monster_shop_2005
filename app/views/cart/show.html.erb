@@ -26,12 +26,13 @@
         </p>
       </td>
       <td>
-        <p><%=number_to_currency(item.price)%></p>
+        <p style="color:black;"><%=number_to_currency(item.price)%></p>
       </td>
       <td>
         <center>
-          <p><%=quantity%></p>
+          <p style="color:black;"><%=quantity%></p>
           <p><%= button_to "+", "/cart/#{item.id}",params: {'operation' => "add"}, method: :patch %></p>
+          <p><%= button_to "-", "/cart/#{item.id}",params: {'operation' => "subtract"}, method: :patch %></p>
           <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
         </center>
         </td>
