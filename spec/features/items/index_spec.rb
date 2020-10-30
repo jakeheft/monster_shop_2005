@@ -80,7 +80,7 @@ RSpec.describe "Items Index Page" do
               wrapper = @meg.items.create!(name: "gum", description: "They'll never pop!", price: 6, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 6)
               film = @meg.items.create!(name: "junk", description: "They'll never pop!", price: 7, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 7)
 
-              order = Order.create!(name: 'JakeBob', address: '124 Main St', city: 'Denver',state: 'Colorado', zip: '80202',)
+              order = Order.create!(name: 'JakeBob', address: '124 Main St', city: 'Denver',state: 'Colorado', zip: '80202', user_id: @jake.id)
               order.item_orders.create!(item_id: tire.id, price: tire.price, quantity: 10)
               order.item_orders.create!(item_id: pen.id, price: pen.price, quantity: 9)
               order.item_orders.create!(item_id: ball.id, price: ball.price, quantity: 8)
