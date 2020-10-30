@@ -1,0 +1,13 @@
+<h1><%= current_user.name %>'s Orders</h1>
+
+<% current_user.orders.each do |order| %>
+  <section id="item-<%= order.id %>">
+    <h4>Order Number: <%= order.id %></h4>
+      <% order.items.each do |item| %>
+        <ul>
+          <li>Item: <%= item.name %>&nbsp&nbsp&nbsp&nbsp Price: $<%= item.price %></li>
+        </ul>
+      <% end %>
+    <h4>Subtotal: $<%= order.grandtotal %></h4><br>
+  </section>
+<% end %>
