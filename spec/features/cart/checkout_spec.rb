@@ -101,5 +101,54 @@ describe "As a user" do
 
       expect(current_path).to eq("/orders/new")
     end
+    describe "I fill out the order info and click create order a pending order is created" do
+      it "The order is associated with my user, I'm redirected to my orders, I see order creation flash, my order is listed and cart is empty" do
+        user = User.create(
+          name: 'JakeBob',
+          address: '124 Main St',
+          city: 'Denver',
+          state: 'Colorado',
+          zip: '80202',
+          email: 'JBob1234@hotmail.com',
+          password: 'heftybags',
+          password_confirmation: 'heftybags',
+          role: 0
+        )
+        dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+        item = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+        # allow_any_instance_of(ApplicationController).to receive(:cart).and_return({item.id => 1})
+        visit "/items/#{item.id}"
+
+        click_on "Add To Cart"
+
+        visit orders_new_path
+
+        fill_in :name, with: user.name
+        fill_in :address, with: user.address
+        fill_in :city, with: user.city
+        fill_in :state, with: user.state
+        fill_in :zip, with: user.zip
+
+        click_on 'Create Order'
+
+        new_order = Order.last
+        item_order = ItemOrder.last
+
+        expect(current_path).to eq("/profile/orders")
+        expect(new_order.status).to eq("Pending")
+        expect(new_order.user).to eq(user)
+        expect(page).to have_content("Your order has been created")
+        within "#item-#{item_order.item_id}" do
+          expect(page).to have_content(item.name)
+          expect(page).to have_content(dog_shop.name)
+          expect(page).to have_content(item.price)
+          expect(page).to have_content(item_order.quantity)
+          expect(page).to have_content(item_order.subtotal)
+        end
+        expect(page).to have_content("Cart: 0")
+      end
+    end
   end
 end
