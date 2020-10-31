@@ -22,4 +22,10 @@ class Order < ApplicationRecord
       item_order.item.update!(inventory: inventory)
     end
   end
+  
+  def order_status
+    if item_orders.where(status: "Pending") == []
+      update(status: "Packaged")
+    end
+  end
 end
