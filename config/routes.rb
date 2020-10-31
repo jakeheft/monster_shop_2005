@@ -55,7 +55,7 @@ Rails.application.routes.draw do
 
   get '/profile/orders', to: "profile_orders#index"
   get '/profile/orders/:id', to: "profile_orders#show"
-
+  patch "/profile/orders/:id", to: "profile_orders#cancel"
 
   get "/password/edit", to: "passwords#edit"
   patch "/password", to: "passwords#update"
