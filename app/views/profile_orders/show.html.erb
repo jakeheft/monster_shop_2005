@@ -7,8 +7,9 @@
 </head>
 
 <section class = "shipping-address">
-  <h1 align = "center">Shipping Info for #<%= @order.id %></h1>
-  <h2><%= @order.status %></h2>
+  <h1 align = "center">Shipping Info for order #<%= @order.id %></h1>
+  <h2 id="order-status">Order Status: <%= @order.status %></h2>
+  <%= button_to "Cancel Order", "/profile/orders/#{@order.id}", method: :patch %>
   <% if !@order.nil? %>
     <table>
       <tr>
