@@ -1,23 +1,24 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe "As a registered user" do
-  describe "When I visit my profile page" do
-    it "I see all my profile data except for password" do
-      jake = User.create!( name: 'JakeBob',
-                           address: '124 Main St',
-                           city: 'Denver',
-                           state: 'Colorado',
-                           zip: '80202',
-                           email: 'JBob1234@hotmail.com',
-                           password: 'heftybags',
-                           password_confirmation: 'heftybags',
-                           role: 0
-                          )
+describe 'As a registered user' do
+  describe 'When I visit my profile page' do
+    it 'I see all my profile data except for password' do
+      jake = User.create!(name: 'JakeBob',
+                          address: '124 Main St',
+                          city: 'Denver',
+                          state: 'Colorado',
+                          zip: '80202',
+                          email: 'JBob1234@hotmail.com',
+                          password: 'heftybags',
+                          password_confirmation: 'heftybags',
+                          role: 0)
       visit '/login'
 
-      fill_in :email, with: "JBob1234@hotmail.com"
-      fill_in :password, with: "heftybags"
-      click_button "Login"
+      fill_in :email, with: 'JBob1234@hotmail.com'
+      fill_in :password, with: 'heftybags'
+      click_button 'Login'
 
       visit '/profile'
 
@@ -29,21 +30,20 @@ describe "As a registered user" do
 
     it "I see a link to edit my profile data and when I click the link I'm taken to
     a page to edit my profile" do
-      jake = User.create!( name: 'JakeBob',
-                           address: '124 Main St',
-                           city: 'Denver',
-                           state: 'Colorado',
-                           zip: '80202',
-                           email: 'JBob1234@hotmail.com',
-                           password: 'heftybags',
-                           password_confirmation: 'heftybags',
-                           role: 0
-                          )
+      jake = User.create!(name: 'JakeBob',
+                          address: '124 Main St',
+                          city: 'Denver',
+                          state: 'Colorado',
+                          zip: '80202',
+                          email: 'JBob1234@hotmail.com',
+                          password: 'heftybags',
+                          password_confirmation: 'heftybags',
+                          role: 0)
       visit '/login'
 
-      fill_in :email, with: "JBob1234@hotmail.com"
-      fill_in :password, with: "heftybags"
-      click_button "Login"
+      fill_in :email, with: 'JBob1234@hotmail.com'
+      fill_in :password, with: 'heftybags'
+      click_button 'Login'
 
       visit '/profile'
 
@@ -51,18 +51,17 @@ describe "As a registered user" do
       expect(current_path).to eq('/profile/edit')
     end
 
-     it "I click the link to change password and I'm taken to a page to 
+    it "I click the link to change password and I'm taken to a page to
      edit my password with a form with fields for new password and confirmation" do
-      jake = User.create!( name: 'JakeBob',
-                           address: '124 Main St',
-                           city: 'Denver',
-                           state: 'Colorado',
-                           zip: '80202',
-                           email: 'JBob1234@hotmail.com',
-                           password: 'heftybags',
-                           password_confirmation: 'heftybags',
-                           role: 0
-                          )
+      jake = User.create!(name: 'JakeBob',
+                          address: '124 Main St',
+                          city: 'Denver',
+                          state: 'Colorado',
+                          zip: '80202',
+                          email: 'JBob1234@hotmail.com',
+                          password: 'heftybags',
+                          password_confirmation: 'heftybags',
+                          role: 0)
 
       visit '/login'
 
@@ -74,6 +73,35 @@ describe "As a registered user" do
 
       click_link('Edit Password')
       expect(current_path).to eq('/password/edit')
+    end
+  end
+  describe 'When I visit my Profile page' do
+    describe 'And I have orders placed in the system' do
+      describe "Then I see a link on my profile page called 'My Orders'" do
+        it "When I click this link my URI path is '/profile/orders'" do
+          jake = User.create!(name: 'JakeBob',
+                              address: '124 Main St',
+                              city: 'Denver',
+                              state: 'Colorado',
+                              zip: '80202',
+                              email: 'JBob1234@hotmail.com',
+                              password: 'heftybags',
+                              password_confirmation: 'heftybags',
+                              role: 0)
+
+          visit '/login'
+
+          fill_in :email, with: 'JBob1234@hotmail.com'
+          fill_in :password, with: 'heftybags'
+          click_button 'Login'
+
+          visit '/profile'
+
+          expect(page).to  have_link("My Orders")
+          click_on "My Orders"
+          expect(current_path).to eq("/profile/orders")
+        end
+      end
     end
   end
 end
