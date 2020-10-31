@@ -31,7 +31,7 @@ describe User, type: :model do
                         )
       expect(jake.valid_email).to eq(false)
     end
-    it '#full_address' do 
+    it '#full_address' do
       jake = User.create!(name: 'JakeBob',
                          address: '124 Main St',
                          city: 'Denver',
@@ -57,5 +57,9 @@ describe User, type: :model do
     it { should validate_presence_of :zip }
     it { should validate_presence_of :password }
     it { should validate_presence_of :password_confirmation }
+  end
+
+  describe "relationships" do
+    it { should have_many :orders }
   end
 end
