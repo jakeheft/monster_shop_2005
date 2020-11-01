@@ -8,7 +8,6 @@
 
 <section class = "shipping-address">
   <h1 align = "center">Shipping Info for order #<%= @order.id %></h1>
-  <% require 'pry'; binding.pry %>
   <h2 id="order-status">Order Status: <%= @order.status %></h2>
   <%= button_to "Cancel Order", "/profile/orders/#{@order.id}", method: :patch if @order.status != "Shipped" %>
   <% if !@order.nil? %>

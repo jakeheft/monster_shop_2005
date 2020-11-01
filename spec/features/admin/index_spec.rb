@@ -104,16 +104,16 @@ describe "As an admin" do
       end
     end
     it "when I click the user name link it goes to the admin view of user profile" do
-      click_on @user.name
+      click_on "#{@user.name}"
       expect(current_path).to eq("/admin/users/#{@user.id}")
     end
 
     it "When I click the button to ship, located next to eah packaged order,
     the status is changed to 'shipped' and it can no longer be cancelled" do
-      order = Order.find(@order_2.id)  
+      order = Order.find(@order_2.id)
       within "#packaged" do
-        
-        within "#order-#{order.id}" do  
+
+        within "#order-#{order.id}" do
           expect(page).to have_button("Ship Order")
           click_button("Ship Order")
         end
@@ -139,7 +139,6 @@ describe "As an admin" do
       fill_in :email, with: "JBob1234@hotmail.com"
       fill_in :password, with: "heftybags"
       click_button "Login"
-       require 'pry'; binding.pry
       visit "/profile/orders/#{order.id}"
       expect(page).to_not have_button("Cancel Order")
     end
