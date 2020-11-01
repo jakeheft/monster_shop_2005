@@ -31,14 +31,14 @@ describe "As an admin" do
                            password_confirmation: 'heftybags',
                            role: 0
                           )
-      @order_2 = Order.create!(name: 'Sarah', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218, user_id: @user_2.id, status: "Packaged")
+      @order_2 = Order.create!(name: 'Sarah', address: '123 Stang St', city: 'whatwewant', state: 'PA', zip: 80218, user_id: @user_2.id, status: "Packaged")
       @order_item_4 = @order_2.item_orders.create!(item: @chain, price: @chain.price, quantity: 1, status: "Fulfilled")
       @order_item_5 =  @order_2.item_orders.create!(item: @tire, price: @tire.price, quantity: 1, status: "Fulfilled")
       @order_3 = Order.create!(name: 'Sarah', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218, user_id: @user_2.id, status: "Shipped")
       @order_item_6 = @order_3.item_orders.create!(item: @rack, price: @rack.price, quantity: 1, status: "Fulfilled")
       @order_4 = Order.create!(name: 'Sarah', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218, user_id: @user_2.id, status: "Packaged")
       @order_item_7 = @order_4.item_orders.create!(item: @chain, price: @chain.price, quantity: 1, status: "Fulfilled")
-      @order_5 = Order.create!(name: 'Sarah', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218, user_id: @user_2.id, status: "Cancelled")
+      @order_5 = Order.create!(name: 'Sarah', address: '123 Stang St', city: 'test', state: 'PA', zip: 80218, user_id: @user_2.id, status: "Cancelled")
       @order_item_9 = @order_5.item_orders.create!(item: @tire, price: @tire.price, quantity: 1, status: "Fulfilled")
       @user_3 = User.create!( name: 'Sarah',
                            address: '124 Main St',
@@ -106,6 +106,42 @@ describe "As an admin" do
     it "when I click the user name link it goes to the admin view of user profile" do
       click_on @user.name
       expect(current_path).to eq("/admin/users/#{@user.id}")
+    end
+
+    it "When I click the button to ship, located next to eah packaged order,
+    the status is changed to 'shipped' and it can no longer be cancelled" do
+      order = Order.find(@order_2.id)  
+      within "#packaged" do
+        
+        within "#order-#{order.id}" do  
+          expect(page).to have_button("Ship Order")
+          click_button("Ship Order")
+        end
+        within "#order-#{@order_4.id}" do
+          expect(page).to have_button("Ship Order")
+          click_button("Ship Order")
+        end
+        expect(current_path).to eq("/admin")
+        expect(page).to_not have_content(order.id)
+        expect(page).to_not have_content(@order_4.id)
+      end
+      within "#shipped" do
+        within "#order-#{order.id}" do
+          expect(page).to have_content(order.id)
+          expect(Order.find(order.id).status).to eq("Shipped")
+        end
+        within "#order-#{@order_4.id}" do
+          expect(page).to have_content(@order_4.id)
+        end
+      end
+      click_link("Log Out")
+      click_link("Log In")
+      fill_in :email, with: "JBob1234@hotmail.com"
+      fill_in :password, with: "heftybags"
+      click_button "Login"
+       require 'pry'; binding.pry
+      visit "/profile/orders/#{order.id}"
+      expect(page).to_not have_button("Cancel Order")
     end
   end
 end
