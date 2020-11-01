@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, on: :create
 
   has_many :orders
-
+  belongs_to :merchant, optional: true
   enum role: %w(user merchant admin)
 
   def valid_email
