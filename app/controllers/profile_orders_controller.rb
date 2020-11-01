@@ -4,7 +4,7 @@ class ProfileOrdersController < ApplicationController
   end
 
   def show
-    @order = current_user.orders.last
+    @order = Order.find(params[:id])
   end
 
   def cancel
