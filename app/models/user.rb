@@ -14,8 +14,4 @@ class User < ApplicationRecord
   def valid_email
     return false if User.find_by(email: self.email)
   end
-
-  def full_address
-    "#{address}, #{city}, #{state}, #{zip}"
-  end
 end
