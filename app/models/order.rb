@@ -29,10 +29,6 @@ class Order < ApplicationRecord
     end
   end
 
-  def method_name
-    order.item_orders.sum { |io| io.quantity }
-  end
-
   def item_qty(merchant_id)
     self.item_orders.where('merchant_id = ?', merchant_id).sum(:quantity)
   end
