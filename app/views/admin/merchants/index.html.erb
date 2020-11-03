@@ -1,0 +1,3 @@
+<% @merchants.each do |merchant| %>
+  <%= button_to "Disable", '/admin/merchants', params: {"merchant_id" => "#{merchant.id}"}, method: :patch %>
+<% end  %>
