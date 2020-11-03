@@ -138,8 +138,8 @@ describe Merchant, type: :model do
       order_item_5 = order_2.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
       order_item_6 =  order_2.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
       order_item_7 =  order_2.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Shipped', merchant_id: bike_shop.id)
-      
-      expect(bike_shop.item_qty).to eq(8)
+
+      expect(bike_shop.item_qty(order_1)).to eq(8)
     end
   end
 end
