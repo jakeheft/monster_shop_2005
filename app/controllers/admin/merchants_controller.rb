@@ -1,4 +1,7 @@
-class Admin::MerchantsController <  Admin::BaseController
+class Admin::MerchantsController < Admin::BaseController
+  def show
+    @merchant = Merchant.find(params[:merchant_id])
+  end
   before_action :require_admin
 
   def index

@@ -81,17 +81,16 @@ RSpec.describe "Items Index Page" do
               film = @meg.items.create!(name: "junk", description: "They'll never pop!", price: 2, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 7)
 
               order = Order.create!(name: 'JakeBob', address: '124 Main St', city: 'Denver',state: 'Colorado', zip: '80202', user_id: @jake.id)
-              order.item_orders.create!(item_id: tire.id, price: tire.price, quantity: 10)
-              order.item_orders.create!(item_id: pen.id, price: pen.price, quantity: 9)
-              order.item_orders.create!(item_id: ball.id, price: ball.price, quantity: 8)
-              order.item_orders.create!(item_id: straw.id, price: straw.price, quantity: 7)
-              order.item_orders.create!(item_id: eraser.id, price: eraser.price, quantity: 6)
-
-              order.item_orders.create!(item_id: stick.id, price: stick.price, quantity: 5)
-              order.item_orders.create!(item_id: toothpick.id, price: pen.price, quantity: 4)
-              order.item_orders.create!(item_id: trash.id, price: ball.price, quantity: 3)
-              order.item_orders.create!(item_id: wrapper.id, price: straw.price, quantity: 2)
-              order.item_orders.create!(item_id: film.id, price: eraser.price, quantity: 1)
+              order.item_orders.create!(item_id: tire.id, price: tire.price, quantity: 10, merchant_id: @meg.id)
+              order.item_orders.create!(item_id: pen.id, price: pen.price, quantity: 9, merchant_id: @meg.id)
+              order.item_orders.create!(item_id: ball.id, price: ball.price, quantity: 8, merchant_id: @meg.id)
+              order.item_orders.create!(item_id: straw.id, price: straw.price, quantity: 7, merchant_id: @meg.id)
+              order.item_orders.create!(item_id: eraser.id, price: eraser.price, quantity: 6, merchant_id: @meg.id)
+              order.item_orders.create!(item_id: stick.id, price: stick.price, quantity: 5, merchant_id: @meg.id)
+              order.item_orders.create!(item_id: toothpick.id, price: pen.price, quantity: 4, merchant_id: @meg.id)
+              order.item_orders.create!(item_id: trash.id, price: ball.price, quantity: 3, merchant_id: @meg.id)
+              order.item_orders.create!(item_id: wrapper.id, price: straw.price, quantity: 2, merchant_id: @meg.id)
+              order.item_orders.create!(item_id: film.id, price: eraser.price, quantity: 1, merchant_id: @meg.id)
 
               visit '/items'
 

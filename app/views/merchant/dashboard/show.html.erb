@@ -1,0 +1,22 @@
+<head>
+  <style>
+    p {
+      color: black;
+    }
+  </style>
+</head>
+
+
+<body>
+  <h1><%= @merchant.name %></h1>
+  <h4><%= @merchant.full_address %></h4>
+  <%= link_to "My Items", "/merchant/items?merchant_id=#{@merchant.id}" %>
+
+  <h3>Merchant Orders To Fulfill</h3>
+  <% @merchant.pending_orders.each do |order| %>
+    <%= link_to "#{order.id}", "/merchants/orders/#{order.id}" %>
+    <p><%= order.created_at %></p>
+    <p><%= order.item_qty(@merchant.id) %></p>
+    <p><%= order.total_value(@merchant.id) %></p>
+  <% end %>
+</body>

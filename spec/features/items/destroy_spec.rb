@@ -43,7 +43,7 @@ RSpec.describe 'item delete', type: :feature do
       chain = bike_shop.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
       review_1 = chain.reviews.create(title: "Great place!", content: "They have great bike stuff and I'd recommend them to anyone.", rating: 5)
       order_1 = Order.create!(name: 'Meg', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218, user_id: user.id)
-      order_1.item_orders.create!(item: chain, price: chain.price, quantity: 2)
+      order_1.item_orders.create!(item: chain, price: chain.price, quantity: 2, merchant_id: bike_shop.id)
 
       visit "/items/#{chain.id}"
 

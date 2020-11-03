@@ -8,14 +8,10 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, on: :create
 
   has_many :orders
-
+  belongs_to :merchant, optional: true
   enum role: %w(user merchant admin)
 
   def valid_email
     return false if User.find_by(email: self.email)
-  end
-
-  def full_address
-    "#{address}, #{city}, #{state}, #{zip}"
   end
 end

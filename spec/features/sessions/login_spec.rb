@@ -25,6 +25,7 @@ describe "As a visitor" do
     end
 
     it "as a merchant user, I am redirected to my merchant dashboard" do
+      bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       merchant_user = User.create!(
         name: 'Mark Merchant',
         address: '124 Main St',
@@ -34,7 +35,8 @@ describe "As a visitor" do
         email: 'buymystuff@hotmail.com',
         password: 'merchantsrock',
         password_confirmation: 'merchantsrock',
-        role: 1
+        role: 1,
+        merchant_id: bike_shop.id
       )
       visit "/login"
 
@@ -148,7 +150,8 @@ describe "As an already registered visitor" do
     end
 
     it "As a merchant user I'm redirected to my dashboard and informed I'm logged in" do
-      merchant_user = User.create(
+      bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      merchant_user = bike_shop.users.create(
         name: 'JakeBob',
         address: '124 Main St',
         city: 'Denver',

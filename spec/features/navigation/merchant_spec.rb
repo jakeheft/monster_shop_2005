@@ -5,7 +5,8 @@ require 'rails_helper'
 describe 'As a merchant employee' do
   describe 'I see the same links as a regular user' do
     it 'Plus the following link: a link to my merchant dashboard ("/merchant")' do
-      jake = User.create!(name: 'JakeBob',
+      bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      jake = bike_shop.users.create!(name: 'JakeBob',
                           address: '124 Main St',
                           city: 'Denver',
                           state: 'Colorado',
@@ -14,13 +15,13 @@ describe 'As a merchant employee' do
                           password: 'heftybags',
                           password_confirmation: 'heftybags',
                           role: 1)
-                        
+
 
       visit '/login'
       fill_in :email, with: jake.email
       fill_in :password, with: jake.password
 
-      
+
       expect(page).to have_link('Home')
       expect(page).to have_link('All Items')
       expect(page).to have_link('All Merchants')

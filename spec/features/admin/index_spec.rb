@@ -18,9 +18,9 @@ describe "As an admin" do
       @tire = @bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @rack = @bike_shop.items.create(name: "Bike Rack", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @order_1 = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218, user_id: @user.id, status: "Pending")
-      @order_item_1 = @order_1.item_orders.create!(item: @chain, price: @chain.price, quantity: 2, status: "Fulfilled")
-      @order_item_2 =  @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "Fulfilled")
-      @order_item_3 = @order_1.item_orders.create!(item: @rack, price: @rack.price, quantity: 2, status: "Pending")
+      @order_item_1 = @order_1.item_orders.create!(item: @chain, price: @chain.price, quantity: 2, status: "Fulfilled", merchant_id: @bike_shop.id)
+      @order_item_2 =  @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "Fulfilled", merchant_id: @bike_shop.id)
+      @order_item_3 = @order_1.item_orders.create!(item: @rack, price: @rack.price, quantity: 2, status: "Pending", merchant_id: @bike_shop.id)
       @user_2 = User.create!( name: 'Sarah',
                            address: '124 Main St',
                            city: 'Denver',
@@ -32,14 +32,14 @@ describe "As an admin" do
                            role: 0
                           )
       @order_2 = Order.create!(name: 'Sarah', address: '123 Stang St', city: 'whatwewant', state: 'PA', zip: 80218, user_id: @user_2.id, status: "Packaged")
-      @order_item_4 = @order_2.item_orders.create!(item: @chain, price: @chain.price, quantity: 1, status: "Fulfilled")
-      @order_item_5 =  @order_2.item_orders.create!(item: @tire, price: @tire.price, quantity: 1, status: "Fulfilled")
+      @order_item_4 = @order_2.item_orders.create!(item: @chain, price: @chain.price, quantity: 1, status: "Fulfilled", merchant_id: @bike_shop.id)
+      @order_item_5 =  @order_2.item_orders.create!(item: @tire, price: @tire.price, quantity: 1, status: "Fulfilled", merchant_id: @bike_shop.id)
       @order_3 = Order.create!(name: 'Sarah', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218, user_id: @user_2.id, status: "Shipped")
-      @order_item_6 = @order_3.item_orders.create!(item: @rack, price: @rack.price, quantity: 1, status: "Fulfilled")
+      @order_item_6 = @order_3.item_orders.create!(item: @rack, price: @rack.price, quantity: 1, status: "Fulfilled", merchant_id: @bike_shop.id)
       @order_4 = Order.create!(name: 'Sarah', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218, user_id: @user_2.id, status: "Packaged")
-      @order_item_7 = @order_4.item_orders.create!(item: @chain, price: @chain.price, quantity: 1, status: "Fulfilled")
+      @order_item_7 = @order_4.item_orders.create!(item: @chain, price: @chain.price, quantity: 1, status: "Fulfilled", merchant_id: @bike_shop.id)
       @order_5 = Order.create!(name: 'Sarah', address: '123 Stang St', city: 'test', state: 'PA', zip: 80218, user_id: @user_2.id, status: "Cancelled")
-      @order_item_9 = @order_5.item_orders.create!(item: @tire, price: @tire.price, quantity: 1, status: "Fulfilled")
+      @order_item_9 = @order_5.item_orders.create!(item: @tire, price: @tire.price, quantity: 1, status: "Fulfilled", merchant_id: @bike_shop.id)
       @user_3 = User.create!( name: 'Sarah',
                            address: '124 Main St',
                            city: 'Denver',
@@ -104,7 +104,7 @@ describe "As an admin" do
       end
     end
     it "when I click the user name link it goes to the admin view of user profile" do
-      click_on @user.name
+      click_on "#{@user.name}"
       expect(current_path).to eq("/admin/users/#{@user.id}")
     end
 
