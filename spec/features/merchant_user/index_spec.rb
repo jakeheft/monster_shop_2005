@@ -11,14 +11,14 @@ RSpec.describe 'Merchant Items Index Page' do
 
     it 'I see a link or button to deactivate the item next to each item that is active' do
       user = @meg.users.create(name: 'JakeBob',
-                         address: '124 Main St',
-                         city: 'Denver',
-                         state: 'Colorado',
-                         zip: '80202',
-                         email: 'JBob1234@hotmail.com',
-                         password: 'heftybags',
-                         password_confirmation: 'heftybags',
-                         role: 1)
+                               address: '124 Main St',
+                               city: 'Denver',
+                               state: 'Colorado',
+                               zip: '80202',
+                               email: 'JBob1234@hotmail.com',
+                               password: 'heftybags',
+                               password_confirmation: 'heftybags',
+                               role: 1)
 
       visit '/login'
 
@@ -35,15 +35,53 @@ RSpec.describe 'Merchant Items Index Page' do
         expect(page).to have_content('Active')
         expect(page).to_not have_content(@tire.description)
         expect(page).to have_content("Inventory: #{@tire.inventory}")
-        expect(page).to have_button("Deactivate")
-        click_on "Deactivate"
+        expect(page).to have_button('Deactivate')
+        click_on 'Deactivate'
       end
 
       within "#item-#{@tire.id}" do
-        expect(page).to have_content("Inactive")
+        expect(page).to have_content('Inactive')
       end
-      
-      expect(page).to have_content("This item is no longer for sale")
+
+      expect(page).to have_content('This item is no longer for sale')
     end
+
+    it 'merchant can activate a deactivated item' do
+    
+    user = @meg.users.create(name: 'JakeBob',
+                             address: '124 Main St',
+                             city: 'Denver',
+                             state: 'Colorado',
+                             zip: '80202',
+                             email: 'JBob1234@hotmail.com',
+                             password: 'heftybags',
+                             password_confirmation: 'heftybags',
+                             role: 1)
+
+    visit '/login'
+
+    fill_in :email, with: 'JBob1234@hotmail.com'
+    fill_in :password, with: 'heftybags'
+    click_button 'Login'
+
+    visit '/merchant/items'
+
+    within "#item-#{@shifter.id}" do
+      expect(page).to have_content(@shifter.name)
+      expect(page).to have_content("Price: $#{@shifter.price}")
+      expect(page).to have_css("img[src*='#{@shifter.image}']")
+      expect(page).to have_content('Inactive')
+      expect(page).to_not have_content(@shifter.description)
+      expect(page).to have_content("Inventory: #{@shifter.inventory}")
+      expect(page).to have_button('Activate')
+      expect(page).not_to have_button('Deactivate')
+      click_on 'Activate'
+    end
+    within "#item-#{@shifter.id}" do
+      expect(page).to have_content('Active')
+    end
+
+    expect(page).to have_content('This item is now available for sale')
   end
+end
 end
