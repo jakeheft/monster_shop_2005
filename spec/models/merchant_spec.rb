@@ -35,7 +35,7 @@ describe Merchant, type: :model do
       expect(@meg.no_orders?).to eq(true)
 
       order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: @user.id)
-      item_order_1 = order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      item_order_1 = order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, merchant_id: @meg.id)
 
       expect(@meg.no_orders?).to eq(false)
     end
@@ -94,7 +94,7 @@ describe Merchant, type: :model do
       order_1 = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218, user_id: user.id, status: "Pending")
       order_item_1 = order_1.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: "Pending", merchant_id: bike_shop.id)
       order_item_2 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: "Pending", merchant_id: bike_shop.id)
-      order_item_3 = order_1.item_orders.create!(item: rack, price: rack.price, quantity: 2, status: "Pending")
+      order_item_3 = order_1.item_orders.create!(item: rack, price: rack.price, quantity: 2, status: "Pending", merchant_id: bike_shop.id)
       order_2 = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218, user_id: user.id, status: "Packaged")
       order_item_1 = order_2.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: "Fulfilled", merchant_id: bike_shop.id)
 
@@ -129,9 +129,9 @@ describe Merchant, type: :model do
       tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       rack = print_shop.items.create(name: "Bike Rack", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       order_1 = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80218, user_id: user.id, status: "Pending")
-      order_item_1 = order_1.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: "Pending")
-      order_item_2 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: "Pending")
-      order_item_3 = order_1.item_orders.create!(item: rack, price: rack.price, quantity: 2, status: "Pending")
+      order_item_1 = order_1.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: "Pending", merchant_id: bike_shop.id)
+      order_item_2 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: "Pending", merchant_id: bike_shop.id)
+      order_item_3 = order_1.item_orders.create!(item: rack, price: rack.price, quantity: 2, status: "Pending", merchant_id: print_shop.id)
 
       expect(bike_shop.item_qty).to eq(6)
     end
