@@ -22,10 +22,14 @@ class Order < ApplicationRecord
       item_order.item.update!(inventory: inventory)
     end
   end
-  
+
   def order_status
     if item_orders.where(status: "Pending") == []
       update(status: "Packaged")
     end
+  end
+
+  def method_name
+    order.item_orders.sum { |io| io.quantity }
   end
 end

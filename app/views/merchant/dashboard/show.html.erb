@@ -1,2 +1,11 @@
 <h1><%= @merchant.name %></h1>
 <h4><%= @merchant.full_address %></h4>
+
+<h3>Merchant Orders To Fulfill</h3>
+<% @merchant.pending_orders.each do |order| %>
+  <%= link_to "#{order.id}", "/merchants/orders/#{order.id}" %>
+  <p><%= order.created_at %></p>
+  <!--Going insane, had to move on, COME BACK TO THIS ###-->
+  <p><%= order.item_orders.sum { |io| io.quantity } %></p>
+  
+<% end %>
