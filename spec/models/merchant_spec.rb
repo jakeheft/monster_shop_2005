@@ -100,6 +100,7 @@ describe Merchant, type: :model do
       order_item_1 = order_2.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: 'Fulfilled', merchant_id: bike_shop.id)
 
       expect(bike_shop.pending_orders).to eq([order_1])
+    end
     it 'disable_merchant' do
     mike = Merchant.create!(name: "Mike's Print Shop",
                             address: '123 Paper Rd.',
