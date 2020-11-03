@@ -63,5 +63,18 @@ describe Merchant, type: :model do
       expect(@meg.distinct_cities).to include("Hershey")
     end
 
+    it 'disable_merchant' do
+    mike = Merchant.create!(name: "Mike's Print Shop",
+                            address: '123 Paper Rd.',
+                            city: 'Denver',
+                            state: 'CO',
+                            zip: 80203)
+    pull_toy = mike.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+    dog_bone = mike.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+
+    mike.disable_merchant
+    expected = mike.items.all? {|item| item.active? == false }
+    expect(expected).to eq(true)
+    end
   end
 end
