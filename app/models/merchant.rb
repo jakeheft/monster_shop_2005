@@ -32,13 +32,14 @@ class Merchant <ApplicationRecord
   end
 
   def item_qty
-    require "pry"; binding.pry
+    item_orders.where(status: 'Pending').sum(:quantity)
+    # require "pry"; binding.pry
     # orders.joins(:item_orders).select('item_orders.*, sum(item_orders.quantity) as total_qty').where(status: 'Pending').group('item_orders.id').distinct#.pluck('total_qty')
-    pending_orders.map do |order|
-      order.items.sum do |item|
-        require "pry"; binding.pry
-        item_order.quantity
-      end
-    end.pop
+    # pending_orders.map do |order|
+    #   order.items.sum do |item|
+    #     require "pry"; binding.pry
+    #     item_order.quantity
+    #   end
+    # end.pop
   end
 end
