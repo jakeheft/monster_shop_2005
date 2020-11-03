@@ -1,0 +1,6 @@
+<% @order.items_by_merchant(current_user.merchant_id).each do |item| %>
+  <%= link_to "#{item.name}", "/merchant/items/#{item.id}"  %>
+  <img src = "<%= item.image  %>">
+  <%= item.price  %>
+  <%= item.order_quantity(@order.id) %>
+<% end %>
