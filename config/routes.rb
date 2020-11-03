@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     get "/", to: "dashboard#show"
     get "/items", to: "items#index"
     post "/items/deactivate", to: "items#deactivate"
+    post "/items/activate", to: "items#activate"
   end
 
   namespace :admin do
