@@ -158,7 +158,6 @@ RSpec.describe('Order Creation') do
     click_on 'Add To Cart'
     visit "/items/#{pencil.id}"
     click_on 'Add To Cart'
-
     visit '/cart'
 
     click_on 'Checkout'
@@ -180,7 +179,6 @@ RSpec.describe('Order Creation') do
     visit '/profile/orders'
 
     new_order = Order.last
-
     click_on new_order.id.to_s
 
     expect(page).to have_content(new_order.id)
