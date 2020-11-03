@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     get "/items", to: "items#index"
     post "/items/deactivate", to: "items#deactivate"
     post "/items/activate", to: "items#activate"
+    delete "/items/", to: "items#destroy"
   end
 
   namespace :admin do

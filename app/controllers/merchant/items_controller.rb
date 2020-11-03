@@ -18,4 +18,11 @@ class Merchant::ItemsController < Merchant::BaseController
     redirect_to merchant_items_path
     flash[:notice] = "This item is now available for sale"
   end
+
+  def destroy
+    item = Item.find(params[:item_id])
+    item.destroy
+    redirect_to merchant_items_path
+    flash[:notice] = "This item has been deleted"
+  end
 end
