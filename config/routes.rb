@@ -44,6 +44,9 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :merchants, only: [:index]
+    patch '/merchants/disable', to: "merchants#disable"
+    patch '/merchants/enable', to: "merchants#enable"
     get '/', to: "dashboard#index"
     get '/users/:id', to: "users#show"
     patch '/:order_id', to: "profile_orders#update"

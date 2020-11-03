@@ -30,4 +30,14 @@ class Merchant <ApplicationRecord
   def pending_orders
     orders.where(status: 'Pending').distinct
   end
+  def disable_merchant
+    self.update(enabled?: false)
+    self.items.update(active?: false)
+  end
+
+  def enable_merchant
+    self.update(enabled?: true)
+    self.items.update(active?: true)
+  end
+
 end

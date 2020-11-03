@@ -74,11 +74,11 @@ RSpec.describe "Items Index Page" do
               straw = @meg.items.create!(name: "Long", description: "They'll suck pop!", price: 8, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 2)
               eraser = @meg.items.create!(name: "Rubber", description: "They'll never write!", price: 7, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 7)
 
-              stick = @meg.items.create!(name: "wood", description: "They'll never grow!", price: 4, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 3)
-              toothpick = @meg.items.create!(name: "plastic", description: "They'll never pop!", price: 4, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 4)
-              trash = @meg.items.create!(name: "banana", description: "They'll never pop!", price: 5, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 55)
-              wrapper = @meg.items.create!(name: "gum", description: "They'll never pop!", price: 6, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 6)
-              film = @meg.items.create!(name: "junk", description: "They'll never pop!", price: 7, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 7)
+              stick = @meg.items.create!(name: "wood", description: "They'll never grow!", price: 6, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 3)
+              toothpick = @meg.items.create!(name: "plastic", description: "They'll never pop!", price: 5, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 4)
+              trash = @meg.items.create!(name: "banana", description: "They'll never pop!", price: 4, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 55)
+              wrapper = @meg.items.create!(name: "gum", description: "They'll never pop!", price: 3, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 6)
+              film = @meg.items.create!(name: "junk", description: "They'll never pop!", price: 2, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 7)
 
               order = Order.create!(name: 'JakeBob', address: '124 Main St', city: 'Denver',state: 'Colorado', zip: '80202', user_id: @jake.id)
               order.item_orders.create!(item_id: tire.id, price: tire.price, quantity: 10, merchant_id: @meg.id)
