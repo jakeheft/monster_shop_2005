@@ -8,6 +8,7 @@
 /.bundle
 coverage
 .DS_Store
+.vscode
 
 # Ignore all logfiles and tempfiles.
 /log/*

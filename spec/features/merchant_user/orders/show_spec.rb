@@ -276,7 +276,7 @@ describe "As a merchant employee" do
 
       expect(page).to_not have_link("Fulfill #{chain.name}")
       expect(page).to_not have_link("Fulfill #{tire.name}")
-      save_and_open_page
+
       expect(page).to have_content("Chain fulfilled")
       expect(page).to have_content("Chain has been fulfilled")
       expect(page).to have_content("Can't fullfill - Not enough items in inventory")

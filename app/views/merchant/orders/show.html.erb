@@ -2,28 +2,28 @@
   <%# make the below conditional into a method %>
   <% if item.order_quantity(@order.id) <= item.inventory && item.status(@order.id) == "Pending" %>
     <%= link_to "#{item.name}", "/merchant/items/#{item.id}" %>
-    <%= link_to "Fulfill #{item.name}", "/merchant/orders/#{@order.id}?item_order_id=#{item.order_item(@order.id)}", method: "patch" %>
+    <%= link_to "Fulfill #{item.name}", "/merchant/itemorders/#{item.order_item(@order.id)}", method: "patch" %>
     <img src = "<%= item.image  %>">
     <%= item.price  %>
     <%= item.order_quantity(@order.id) %>
     <%= item.status(@order.id) %>
 
   <% elsif item.status(@order.id) == "Fulfilled" %>
-    <%= link_to "#{item.name}", "/merchant/orders/#{@order.id}" %>
+   <%= item.name %>
     <img src = "<%= item.image  %>">
     <%= item.price  %>
     <%= item.order_quantity(@order.id) %>
     <h5> <%= "#{item.name} has been fulfilled" %> </h5>
  
  <% elsif item.order_quantity(@order.id) >= item.inventory && item.status(@order.id) == "Pending" %>
-    <%= link_to "#{item.name}", "/merchant/orders/#{@order.id}" %>
+    <%= item.name %>
     <img src = "<%= item.image  %>">
     <%= item.price  %>
     <%= item.order_quantity(@order.id) %>
     <h5> <%= item.name %> Can't fullfill - Not enough items in inventory </h5>
 
     <% else %>
-    <%= link_to "#{item.name}", "/merchant/items/#{item.id}" %>
+    <%= item.name %>
     <%= item.price  %>
     <%= item.order_quantity(@order.id) %>
   <% end %>

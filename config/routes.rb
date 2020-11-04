@@ -43,7 +43,7 @@ Rails.application.routes.draw do
     get "/", to: "dashboard#show"
     get "/items", to: "items#index"
     get "/orders/:order_id", to: "orders#show"
-    patch "/orders/:order_id", to: "item_orders#update"
+    patch "/itemorders/:itemorder_id", to: "item_orders#update"
     post "/items/deactivate", to: "items#deactivate"
     post "/items/activate", to: "items#activate"
     resources :items, except: [:put]
