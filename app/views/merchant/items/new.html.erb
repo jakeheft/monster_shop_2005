@@ -1,0 +1,21 @@
+
+<%= form_for @item, url: merchant_items_path, local: true do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name, "#{@item.name}" %>
+  
+  <%= f.label :description %>
+  <%= f.text_field :description, "#{@item.description}" %>
+
+  <%= f.label :image %>
+  <%= f.text_field :image, "#{@item.image}" %>
+
+  <%= f.label :price %>
+  <%= f.text_field :price, "#{@item.price}" %>
+
+  <%= f.label :inventory %>
+  <%= f.text_field :inventory, "#{@item.inventory}" %>
+
+  <%= f.hidden_field :merchant_id , :value => current_user.merchant.id %>
+
+  <%= f.submit %>
+<% end %>

@@ -5,6 +5,21 @@ class Merchant::ItemsController < Merchant::BaseController
     @merchant = Merchant.find(user.merchant.id)
   end
 
+  def new
+    @item = Item.new(item_params)
+  end
+
+  def create
+    @item = Item.new(item_params)
+    if @item.save
+      redirect_to merchant_items_path
+      flash[:notice] = "New item has been created"
+    else
+      flash[:error] = @item.errors.full_messages.to_sentence
+      render :new
+    end
+  end
+
   def deactivate
     item = Item.find(params[:item_id])
     item.update(active?: false)
@@ -24,5 +39,11 @@ class Merchant::ItemsController < Merchant::BaseController
     item.destroy
     redirect_to merchant_items_path
     flash[:notice] = "This item has been deleted"
+  end
+
+  private
+
+  def item_params
+    params.permit(:name, :description, :image, :price, :inventory, :merchant_id)
   end
 end
