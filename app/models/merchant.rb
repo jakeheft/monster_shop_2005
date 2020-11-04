@@ -39,5 +39,4 @@ class Merchant <ApplicationRecord
     self.update(enabled?: true)
     self.items.update(active?: true)
   end
-
 end

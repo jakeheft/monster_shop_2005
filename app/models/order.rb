@@ -36,4 +36,8 @@ class Order < ApplicationRecord
   def total_value(merchant_id)
     self.item_orders.where('merchant_id = ?', merchant_id).sum('quantity * price')
   end
+
+  def items_by_merchant(merchant_id)
+    self.items.where('item_orders.merchant_id = ?', merchant_id)
+  end
 end

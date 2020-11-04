@@ -37,4 +37,16 @@ class Item <ApplicationRecord
   def self.bottom_five
     Item.joins(:item_orders).select('items.name, item_orders.quantity').order('quantity asc').limit(5)
   end
+
+  def order_quantity(order_id)
+    self.item_orders.where('order_id =?', order_id).sum(:quantity)
+  end
+
+  def status(order_id)
+    self.item_orders.where('order_id =?', order_id).pluck(:status)[0]
+  end
+  
+  def order_item(order_id)
+    self.item_orders.where('order_id =?', order_id).pluck(:id)[0]
+  end
 end
