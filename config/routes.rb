@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "/items/:id", to: "items#show"
   get "/items/:id/edit", to: "items#edit"
   patch "/items/:id", to: "items#update"
+
   get "/merchants/:merchant_id/items", to: "items#index"
   get "/merchants/:merchant_id/items/new", to: "items#new"
   post "/merchants/:merchant_id/items", to: "items#create"
@@ -43,6 +44,9 @@ Rails.application.routes.draw do
     get "/items", to: "items#index"
     get "/orders/:order_id", to: "orders#show"
     patch "/orders/:order_id", to: "item_orders#update"
+    post "/items/deactivate", to: "items#deactivate"
+    post "/items/activate", to: "items#activate"
+    resources :items, except: [:put]
   end
 
   namespace :admin do
