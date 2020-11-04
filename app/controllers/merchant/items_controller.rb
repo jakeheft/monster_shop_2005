@@ -6,7 +6,7 @@ class Merchant::ItemsController < Merchant::BaseController
   end
 
   def new
-    @item = Item.new(item_params)
+    @item = Item.new
   end
 
   def create
@@ -44,6 +44,6 @@ class Merchant::ItemsController < Merchant::BaseController
   private
 
   def item_params
-    params.permit(:name, :description, :image, :price, :inventory, :merchant_id)
+    params.require(:item).permit(:name, :description, :image, :price, :inventory, :merchant_id)
   end
 end
