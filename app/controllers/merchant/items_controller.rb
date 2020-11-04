@@ -20,6 +20,21 @@ class Merchant::ItemsController < Merchant::BaseController
     end
   end
 
+  def edit
+    @item = Item.find(params[:id])
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    @item.update(item_params_edit)
+    if @item.save
+      redirect_to "/merchant/items"
+    else
+      flash[:error] = @item.errors.full_messages.to_sentence
+      render :edit
+    end
+  end
+
   def deactivate
     item = Item.find(params[:item_id])
     item.update(active?: false)
@@ -35,13 +50,19 @@ class Merchant::ItemsController < Merchant::BaseController
   end
 
   def destroy
-    item = Item.find(params[:item_id])
+    item = Item.find(params[:id])
     item.destroy
     redirect_to merchant_items_path
     flash[:notice] = "This item has been deleted"
   end
 
   private
+
+  def item_params_edit
+    
+    params.permit(:name, :description, :image, :price, :inventory, :merchant_id)
+    
+  end
 
   def item_params
     params.require(:item).permit(:name, :description, :image, :price, :inventory, :merchant_id)
