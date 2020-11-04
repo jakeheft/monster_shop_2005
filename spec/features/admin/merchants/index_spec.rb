@@ -139,4 +139,54 @@ describe "As an admin when I visit the merchant index page" do
       expect(page).to have_content("Merchant Account Is Now Enabled")
     end
   end
+
+
+ describe "As an admin user, when I visit the merchant's index page at '/admin/merchants'" do
+   describe "I see all merchants and next to each merchant's name I see their city and state" do
+     it "Merchant's name is a link to their dashboard" do
+       jake = User.create!(name: 'JakeBob',
+                           address: '124 Main St',
+                           city: 'Denver',
+                           state: 'Colorado',
+                           zip: '80202',
+                           email: 'JBob1234@hotmail.com',
+                           password: 'heftybags',
+                           password_confirmation: 'heftybags',
+                           role: 2)
+       mike = Merchant.create!(name: "Mike's Print Shop",
+                               address: '123 Paper Rd.',
+                               city: 'Denver',
+                               state: 'CO',
+                               zip: 80203)
+       steve = Merchant.create!(name: "Steve's Print Shop",
+                               address: '123 Steve Rd.',
+                               city: 'Denver',
+                               state: 'CO',
+                               zip: 80203)
+       pull_toy = mike.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+       dog_bone = steve.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+
+       visit "/login"
+
+       fill_in :email, with: "JBob1234@hotmail.com"
+       fill_in :password, with: "heftybags"
+       click_button "Login"
+
+       visit "/admin/merchants"
+
+       within("#merchant-#{mike.id}") do
+         expect(page).to have_content(mike.city)
+         expect(page).to have_content(mike.state)
+
+         expect(page).to have_link(mike.name)
+
+         expect(page).not_to have_button("Enable")
+         expect(page).to have_button("Disable")
+       end
+
+       click_on "#{mike.name}"
+       expect(current_path).to eq("/admin/merchants")
+     end
+   end
+  end
 end
