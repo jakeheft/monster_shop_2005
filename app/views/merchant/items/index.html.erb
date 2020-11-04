@@ -1,6 +1,6 @@
 <section class="grid-container">
 <%= link_to 'Add New Item', new_merchant_item_path %>
-  <% @items.each do |item| %>
+  <% @merchant.items.each do |item| %>
     <section class = "grid-item" id= 'item-<%=item.id%>'>
       <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
       <%= button_to "Deactivate", "/merchant/items/deactivate", params: {:item_id => item.id} if item.active? %>
