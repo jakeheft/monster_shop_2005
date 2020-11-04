@@ -31,15 +31,15 @@ RSpec.describe 'Merchant Items Index Page' do
       click_on 'Add New Item'
 
       expect(page).to have_content('Name')
-      !find_field(:item_name)
+      !find_field(:name)
       expect(page).to have_content('Description')
-      !find_field(:item_description)
+      !find_field(:description)
       expect(page).to have_content('Image')
-      !find_field(:item_image)
+      !find_field(:image)
       expect(page).to have_content('Price')
-      !find_field(:item_price)
+      !find_field(:price)
       expect(page).to have_content('Inventory')
-      !find_field(:item_inventory)
+      !find_field(:inventory)
       expect(page).to have_button('Create Item')
     end
 
@@ -69,19 +69,19 @@ RSpec.describe 'Merchant Items Index Page' do
       inventory = 25
 
       click_on "Add New Item"
-      fill_in "item[name]", with: name
-      fill_in "item[price]", with: price
-      fill_in "item[description]", with: description
-      fill_in "item[image]", with: image_url
-      fill_in "item[inventory]", with: inventory
+      
+      fill_in :name, with: name
+      fill_in :price, with: price
+      fill_in :description, with: description
+      fill_in :image, with: image_url
+      fill_in :inventory, with: inventory
 
       click_button "Create Item"
 
       expect(page).to have_content("New item has been created")
       expect(page).to have_css("#item-#{Item.last.id}")
     end
-
-    it 'creating a new item, sad path' do
+    it 'creating a new item(sad path)' do
       user = @meg.users.create(name: 'JakeBob',
                                address: '124 Main St',
                                city: 'Denver',
@@ -107,13 +107,20 @@ RSpec.describe 'Merchant Items Index Page' do
       inventory = ""
 
       click_on "Add New Item"
-      fill_in "item[name]", with: name
-      fill_in "item[price]", with: price
-      fill_in "item[description]", with: description
-      fill_in "item[image]", with: image_url
-      fill_in "item[inventory]", with: inventory
+      
+      fill_in :name, with: name
+      fill_in :price, with: price
+      fill_in :description, with: description
+      fill_in :image, with: image_url
+      fill_in :inventory, with: inventory
 
       click_button "Create Item"
+
+      expect(find_field(:name).value).to eq(name)
+      expect(find_field(:description).value).to eq(description)
+      expect(find_field(:image).value).to eq(image_url)
+      expect(find_field(:price).value).to eq(price.to_s)
+      expect(find_field(:inventory).value).to eq(inventory)
 
       expect(page).to have_content("Inventory can't be blank and Inventory is not a number")
     end
