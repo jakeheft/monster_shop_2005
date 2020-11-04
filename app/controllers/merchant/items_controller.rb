@@ -1,7 +1,6 @@
 class Merchant::ItemsController < Merchant::BaseController
   def index
     user = User.find(session[:user_id])
-    @items = Merchant.find(user.merchant.id).items
     @merchant = Merchant.find(user.merchant.id)
   end
 
@@ -42,6 +41,7 @@ class Merchant::ItemsController < Merchant::BaseController
     flash[:notice] = "This item is no longer for sale"
   
   end
+  
   def activate
     item = Item.find(params[:item_id])
     item.update(active?: true)
