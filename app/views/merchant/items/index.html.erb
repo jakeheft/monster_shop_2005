@@ -1,11 +1,12 @@
 <section class="grid-container">
-<%= link_to 'Add New Item', merchant_items_new_path %>
+<%= link_to 'Add New Item', new_merchant_item_path %>
   <% @items.each do |item| %>
     <section class = "grid-item" id= 'item-<%=item.id%>'>
       <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
       <%= button_to "Deactivate", "/merchant/items/deactivate", params: {:item_id => item.id} if item.active? %>
       <%= button_to "Activate", "/merchant/items/activate", params: {:item_id => item.id} if !item.active?%>
-      <%= button_to "Delete Item", "/merchant/items", params: {:item_id => item.id}, method: "delete" if item.item_orders.empty?%>
+      <%= button_to "Edit Item", "/merchant/items/#{item.id}/edit", params: {:item_id => item.id}, method: "get" %>
+      <%= button_to "Delete Item", "/merchant/items/#{item.id}", method: "delete" if item.item_orders.empty?%>
       <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
       <img src= <%= item.image %>>
       <p> <%= item.description unless @merchant%> </p>
