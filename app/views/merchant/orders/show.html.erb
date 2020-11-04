@@ -1,6 +1,23 @@
 <% @order.items_by_merchant(current_user.merchant_id).each do |item| %>
-  <%= link_to "#{item.name}", "/merchant/items/#{item.id}"  %>
-  <img src = "<%= item.image  %>">
-  <%= item.price  %>
-  <%= item.order_quantity(@order.id) %>
+  <%# make the below conditional into a method %>
+  <% if item.order_quantity(@order.id) <= item.inventory && item.status(@order.id) == "Pending" %>
+    <%= link_to "#{item.name}", "/merchant/items/#{item.id}" %>
+    <%= link_to "Fulfill #{item.name}", "/merchant/orders/#{@order.id}?item_order_id=#{item.order_item(@order.id)}", method: "patch" %>
+    <img src = "<%= item.image  %>">
+    <%= item.price  %>
+    <%= item.order_quantity(@order.id) %>
+    <%= item.status(@order.id) %>
+
+  <% elsif item.status(@order.id) == "Fulfilled" %>
+    <%= link_to "#{item.name}", "/merchant/orders/#{@order.id}" %>
+    <img src = "<%= item.image  %>">
+    <%= item.price  %>
+    <%= item.order_quantity(@order.id) %>
+    <h5> <%= item.name %> has been fulfilled </h5>
+
+    <% else %>
+    <%= link_to "#{item.name}", "/merchant/items/#{item.id}" %>
+    <%= item.price  %>
+    <%= item.order_quantity(@order.id) %>
+  <% end %>
 <% end %>
