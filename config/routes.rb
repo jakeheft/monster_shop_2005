@@ -41,12 +41,9 @@ Rails.application.routes.draw do
 
   namespace :merchant do
     get "/", to: "dashboard#show"
-    get "/items", to: "items#index"
-    get "/items/new", to: "items#new"
-    post "/items", to: "items#create"
     post "/items/deactivate", to: "items#deactivate"
     post "/items/activate", to: "items#activate"
-    delete "/items/", to: "items#destroy"
+    resources :items, except: [:put]
   end
 
   namespace :admin do
