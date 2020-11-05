@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
   namespace :merchant do
     resources :orders, only: %i[show]
-    resources :items, except: [:put]
+    resources :items
   get "/", to: "dashboard#show"
   patch "/itemorders/:itemorder_id", to: "item_orders#update"
   post "/items/deactivate", to: "items#deactivate"
@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :merchants, only: [:index]
+    resources :merchants, only: %i[index]
     resources :users, only: %i[index show]
     patch '/merchants/disable', to: "merchants#disable"
     patch '/merchants/enable', to: "merchants#enable"
@@ -49,7 +49,7 @@ Rails.application.routes.draw do
     get '/merchants/:merchant_id', to: 'merchants#show'
   end
 
-  resources :users, only: [:create]
+  resources :users, only: %i[create]
 
   get "/register", to: "users#new"
 
