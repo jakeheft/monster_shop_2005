@@ -25,10 +25,10 @@
          <%= link_to "Merchant Dashboard", "/merchant" if current_user.merchant?%>
          <%= link_to "Admin Dashboard", "/admin" if current_user.admin? %>
          <%= link_to "All Users", "/admin/users" if current_user.admin? %>
-       <p1><%= "Logged in as #{current_user.name}"  %></p1>
+       <p id = "current-user"><%= "Logged in as #{current_user.name}"  %></p>
      <% end %>
     </nav>
-    
+
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">
         <p1><%= msg %></p1>

@@ -35,6 +35,9 @@
    color: white;
  }
 
+#current-user {
+              color: white;
+              }
 ul{
   padding: 0px;
   text-align: center;
@@ -150,6 +153,12 @@ form {
 .error-flash {
   padding: 10px;
   background-color: red;
+  color: white;
+}
+
+.notice-flash {
+  padding: 10px;
+  background-color: green;
   color: white;
 }
 .success-flash {
