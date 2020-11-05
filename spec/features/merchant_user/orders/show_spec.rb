@@ -56,7 +56,7 @@ describe "As a merchant employee" do
       order_1 = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Pending')
       order_item_1 = order_1.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
       order_item_2 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
-      order_item_4 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Shipped', merchant_id: bike_shop.id)
+      order_item_4 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Fulfilled', merchant_id: bike_shop.id)
       order_item_3 = order_1.item_orders.create!(item: rack, price: rack.price, quantity: 2, status: 'Pending', merchant_id: print_shop.id)
 
       order_2 = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Shipped')
@@ -107,7 +107,7 @@ describe "As a merchant employee" do
       order_1 = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Pending')
       order_item_1 = order_1.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
       order_item_2 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
-      order_item_4 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Shipped', merchant_id: bike_shop.id)
+      order_item_4 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Fulfilled', merchant_id: bike_shop.id)
       order_item_3 = order_1.item_orders.create!(item: rack, price: rack.price, quantity: 2, status: 'Pending', merchant_id: print_shop.id)
 
       order_2 = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Shipped')
@@ -180,7 +180,7 @@ describe "As a merchant employee" do
     end
 
     it "When I visit an order show page, if the desired quantity of the item
-     is less or equal to current inventory and it is not already fulfilled, 
+     is less or equal to current inventory and it is not already fulfilled,
      I see a button to fulfill that item." do
       print_shop = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -231,7 +231,7 @@ describe "As a merchant employee" do
     it "When I click on the link to fulfill the order, I am returned to the order
     show page and I see the item is now fulfilled. I also see a flash message
     indicating that I have fulfilled that item and the inventory is reduced by one" do
-      
+
       print_shop = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       user = User.create!(

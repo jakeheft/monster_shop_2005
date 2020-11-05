@@ -260,10 +260,10 @@ RSpec.describe('Order Creation') do
 
         expect(current_path).to eq('/profile/orders')
 
-        expect(new_order.item_orders.all? { |item_order| item_order.status == 'unfulfilled' }).to eq(true)
+        expect(new_order.item_orders.all? { |item_order| item_order.status == 'Unfulfilled' }).to eq(true)
 
         within "#item-#{new_order.id}" do
-          expect(page).to have_content('cancelled')
+          expect(page).to have_content('Cancelled')
         end
 
         expect(page).to have_content("Your order is now cancelled")

@@ -99,13 +99,13 @@ describe Order, type: :model do
       order_1 = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Pending')
       order_item_1 = order_1.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
       order_item_2 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
-      order_item_4 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Shipped', merchant_id: bike_shop.id)
+      order_item_4 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Fulfilled', merchant_id: bike_shop.id)
       order_item_3 = order_1.item_orders.create!(item: rack, price: rack.price, quantity: 2, status: 'Pending', merchant_id: print_shop.id)
 
       order_2 = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Pending')
       order_item_5 = order_2.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
       order_item_6 =  order_2.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
-      order_item_7 =  order_2.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Shipped', merchant_id: bike_shop.id)
+      order_item_7 =  order_2.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Fulfilled', merchant_id: bike_shop.id)
 
       expect(order_1.item_qty(bike_shop.id)).to eq(6)
     end
@@ -139,13 +139,13 @@ describe Order, type: :model do
       order_1 = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Pending')
       order_item_1 = order_1.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
       order_item_2 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
-      order_item_4 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Shipped', merchant_id: bike_shop.id)
+      order_item_4 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Fulfilled', merchant_id: bike_shop.id)
       order_item_3 = order_1.item_orders.create!(item: rack, price: rack.price, quantity: 2, status: 'Pending', merchant_id: print_shop.id)
 
       order_2 = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Pending')
       order_item_5 = order_2.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
       order_item_6 =  order_2.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
-      order_item_7 =  order_2.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Shipped', merchant_id: bike_shop.id)
+      order_item_7 =  order_2.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Fulfilled', merchant_id: bike_shop.id)
 
       expect(order_1.total_value(bike_shop.id)).to eq(500.0)
     end
@@ -181,7 +181,7 @@ describe Order, type: :model do
       order_item_1 = order_1.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
       order_item_2 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
       order_item_3 = order_1.item_orders.create!(item: rack, price: rack.price, quantity: 2, status: 'Pending', merchant_id: print_shop.id)
-      
+
       expect(order_1.items_by_merchant(bike_shop.id)).to eq([chain, tire])
     end
   end
