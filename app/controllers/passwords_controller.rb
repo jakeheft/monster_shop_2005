@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 class PasswordsController < UserBaseController
-  def edit
-  end
+  def edit; end
 
   def update
     @current_user.assign_attributes(password_params)
@@ -14,7 +15,7 @@ class PasswordsController < UserBaseController
 
   private
 
-  def password_params 
+  def password_params
     params.permit(:password, :password_confirmation)
   end
 end
