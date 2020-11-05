@@ -25,12 +25,23 @@
  	font-family: "Marker Felt", fantasy;
  }
 
+ p {
+   color: black;
+   font-size: 15px;
+ }
+
+ p1 {
+   font-size: 17px;
+   color: white;
+ }
+
 ul{
   padding: 0px;
   text-align: center;
 }
 img{
-  width: 50%;
+  width:20%;
+  height:auto;
 }
 
 #cart-image{
@@ -97,6 +108,12 @@ section[id*='review'] {
 
  .address{
    text-align: center;
+ }
+
+ button{
+   text-align: center;
+   padding: 5px;
+    width: 30%;
  }
 
  input[type=text], select {

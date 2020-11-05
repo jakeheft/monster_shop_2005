@@ -1,4 +1,4 @@
-<h1 align = "center">Order</h1>
+<h1>Order</h1>
 <table>
   <tr>
     <th>Item</th>
@@ -19,7 +19,7 @@
     </tr>
   <% end %>
 </table>
-<h3 align = "right">Total: <%= number_to_currency(cart.total)%></h3>
+<h3>Total: <%= number_to_currency(cart.total)%></h3>
 <center>
   <h2>Shipping Info:</h2>
   <%= form_tag "/orders", method: :create do %>

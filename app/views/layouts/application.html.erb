@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      p {
-        color: white;
-      }
-    </style>
     <title>Monster Shop</title>
     <%= csrf_meta_tags %>
 
@@ -30,12 +25,13 @@
          <%= link_to "Merchant Dashboard", "/merchant" if current_user.merchant?%>
          <%= link_to "Admin Dashboard", "/admin" if current_user.admin? %>
          <%= link_to "All Users", "/admin/users" if current_user.admin? %>
-       <p><%= "Logged in as #{current_user.name}"  %></p>
+       <p1><%= "Logged in as #{current_user.name}"  %></p1>
      <% end %>
     </nav>
+    
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">
-        <p><%= msg %></p>
+        <p1><%= msg %></p1>
       </div>
     <% end %>
     <%= yield %>
