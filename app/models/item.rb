@@ -7,7 +7,6 @@ class Item <ApplicationRecord
   validates_presence_of :name,
                         :description,
                         :price,
-                        
                         :inventory
   validates_inclusion_of :active?, :in => [true, false]
   validates_numericality_of :price, greater_than: 0
@@ -43,10 +42,10 @@ class Item <ApplicationRecord
   end
 
   def status(order_id)
-    self.item_orders.where('order_id =?', order_id).pluck(:status)[0]
+    self.item_orders.find_by('order_id =?', order_id).status
   end
   
   def order_item(order_id)
-    self.item_orders.where('order_id =?', order_id).pluck(:id)[0]
+    self.item_orders.find_by('order_id =?', order_id).id
   end
 end
