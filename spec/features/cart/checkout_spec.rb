@@ -128,7 +128,7 @@ describe "As a user" do
 
         click_on "Add To Cart"
 
-        visit orders_new_path
+        visit '/orders/new'
 
         fill_in :name, with: user.name
         fill_in :address, with: user.address
