@@ -25,6 +25,11 @@
  	font-family: "Marker Felt", fantasy;
  }
 
+ p {
+   color: black;
+   font-size: 15px;
+ }
+
 ul{
   padding: 0px;
   text-align: center;
