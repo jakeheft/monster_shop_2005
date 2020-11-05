@@ -9,7 +9,7 @@
     <h4>Items in Order:  <%=  order.count_items %></h4>
       <% order.items.each do |item| %>
         <ul>
-          <li>Item: <%= item.name %>&nbsp&nbsp&nbsp&nbsp Price: $<%= item.price %></li>
+          <li align ="left">Item: <%= item.name %>&nbsp&nbsp&nbsp&nbsp Price: $<%= item.price %></li>
         </ul>
       <% end %>
     <h4>Total: $<%= order.grandtotal %></h4><br>

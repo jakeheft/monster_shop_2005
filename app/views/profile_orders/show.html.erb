@@ -1,15 +1,7 @@
-<head>
-  <style>
-    p{
-      color: black;
-    }
-  </style>
-</head>
-
 <section class = "shipping-address">
-  <h1 align = "center">Shipping Info for order #<%= @order.id %></h1>
+  <h1>Shipping Info for order #<%= @order.id %></h1>
   <h2 id="order-status">Order Status: <%= @order.status %></h2>
-  <%= button_to "Cancel Order", "/profile/orders/#{@order.id}", method: :patch if @order.status != "Shipped" %>
+  <button><%= button_to "Cancel Order", "/profile/orders/#{@order.id}", method: :patch if @order.status != "Shipped" %></button>
   <% if !@order.nil? %>
     <table>
       <tr>
@@ -29,7 +21,7 @@
     </table>
   </section>
 
-  <h1 align = "center">Order Info</h1>
+  <h1>Order Info</h1>
   <center>
     <table>
       <tr>
@@ -49,7 +41,7 @@
           <td><p><%= number_to_currency(item_order.price)%></p></td>
           <td><p><%= item_order.quantity%></p></td>
           <td><p><%= number_to_currency(item_order.subtotal)%></p></td>
-          <td><img src="<%= item_order.item.image %>" alt="" style="width:20% ;height:auto;"></td>
+          <td><img src="<%= item_order.item.image %>" alt=""></td>
         </section>
       </tr>
     <% end %>
