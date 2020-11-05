@@ -34,4 +34,10 @@ class Order < ApplicationRecord
   def items_by_merchant(merchant_id)
     self.items.where('item_orders.merchant_id = ?', merchant_id)
   end
+
+  def cancel_order
+    self.update(status: 'cancelled')
+    self.return_items
+    self.item_orders.update(status: 'unfulfilled')
+  end
 end
