@@ -20,7 +20,7 @@ hippo_shop = Merchant.create(name: "Brian's Hippo Shop", address: '125 Doggo St.
 penguin_shop = Merchant.create(name: "Brian's Penguin Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 
 #users
-jake = User.create!(name: 'JakeBob',
+jake = User.create!(name: 'Jake',
   address: '124 Main St',
   city: 'Denver',
   state: 'Colorado',
