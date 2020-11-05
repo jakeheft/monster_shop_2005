@@ -1,0 +1,7 @@
+<% @users.each do |user| %>
+  <div id = "user-<%= user.id %>">
+    <%= link_to user.name, "/admin/users/#{user.id}" %>
+    <%= user.created_at %>
+    <%= user.role %>
+  </div>
+<% end %>
