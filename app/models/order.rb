@@ -23,12 +23,6 @@ class Order < ApplicationRecord
     end
   end
 
-  def order_status
-    if item_orders.where(status: "Pending") == []
-      update(status: "Packaged")
-    end
-  end
-
   def item_qty(merchant_id)
     self.item_orders.where('merchant_id = ?', merchant_id).sum(:quantity)
   end
