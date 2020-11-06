@@ -11,7 +11,7 @@ class Merchant::ItemsController < Merchant::BaseController
   def create
     @item = Item.new(item_params)
     if @item.save
-      redirect_to merchant_items_path
+      redirect_to '/merchant/items'
       flash[:notice] = "New item has been created"
     else
       flash[:error] = @item.errors.full_messages.to_sentence
@@ -37,7 +37,7 @@ class Merchant::ItemsController < Merchant::BaseController
   def deactivate
     item = Item.find(params[:item_id])
     item.update(active?: false)
-    redirect_to merchant_items_path
+    redirect_to '/merchant/items'
     flash[:notice] = "This item is no longer for sale"
   
   end
@@ -45,14 +45,14 @@ class Merchant::ItemsController < Merchant::BaseController
   def activate
     item = Item.find(params[:item_id])
     item.update(active?: true)
-    redirect_to merchant_items_path
+    redirect_to '/merchant/items'
     flash[:notice] = "This item is now available for sale"
   end
 
   def destroy
     item = Item.find(params[:id])
     item.destroy
-    redirect_to merchant_items_path
+    redirect_to '/merchant/items'
     flash[:notice] = "This item has been deleted"
   end
 
