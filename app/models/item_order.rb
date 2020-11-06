@@ -8,4 +8,8 @@ class ItemOrder <ApplicationRecord
   def subtotal
     price * quantity
   end
+
+  def items_left
+    (self.item.inventory - self.quantity)
+  end
 end
