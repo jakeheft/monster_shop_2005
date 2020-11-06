@@ -44,6 +44,4 @@ class CartController < CartBaseController
       end
     end
   end
-
-
 end
