@@ -5,13 +5,14 @@ class OrdersController < ApplicationController
 
   def create
     order_params[:user_id] = current_user.id
-    order = Order.create(order_params.merge(user_id: current_user.id, status: 'Pending'))
+    order = Order.create(order_params.merge(user_id: current_user.id).merge(status: 'Pending'))
     if order.save
       cart.items.each do |item, quantity|
         order.item_orders.create({ item: item,
                                    quantity: quantity,
                                    price: item.price,
-                                   merchant_id: item.merchant.id })
+                                   merchant_id: item.merchant.id,
+                                   status: "Pending" })
       end
       session.delete(:cart)
       redirect_to '/profile/orders', notice: 'Your order has been created'

@@ -2,7 +2,6 @@
 
 class Merchant::ItemOrdersController < Merchant::BaseController
   def update
-    # require 'pry'; binding.pry
     item_order = ItemOrder.find(params[:itemorder_id])
     order = Order.find(params[:order_id])
     item_order.assign_attributes(status: 'Fulfilled')
