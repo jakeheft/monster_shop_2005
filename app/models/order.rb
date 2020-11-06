@@ -24,20 +24,24 @@ class Order < ApplicationRecord
   end
 
   def item_qty(merchant_id)
-    self.item_orders.where('merchant_id = ?', merchant_id).sum(:quantity)
+    item_orders.where('merchant_id = ?', merchant_id).sum(:quantity)
   end
 
   def total_value(merchant_id)
-    self.item_orders.where('merchant_id = ?', merchant_id).sum('quantity * price')
+    item_orders.where('merchant_id = ?', merchant_id).sum('quantity * price')
   end
 
   def items_by_merchant(merchant_id)
-    self.items.where('item_orders.merchant_id = ?', merchant_id)
+    items.where('item_orders.merchant_id = ?', merchant_id)
   end
 
   def cancel_order
-    self.update(status: 'Cancelled')
-    self.return_items
-    self.item_orders.update(status: 'Unfulfilled')
+    update(status: 'Cancelled')
+    return_items
+    item_orders.update(status: 'Unfulfilled')
+  end
+
+  def order_status
+    update(status: 'Packaged') if item_orders.where(status: 'Pending') == []
   end
 end

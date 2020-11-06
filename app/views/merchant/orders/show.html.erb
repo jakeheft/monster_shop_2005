@@ -2,7 +2,7 @@
   <%# make the below conditional into a method %>
   <% if item.order_quantity(@order.id) <= item.inventory && item.status(@order.id) == "Pending" %>
     <%= link_to "#{item.name}", "/merchant/items/#{item.id}" %>
-    <%= link_to "Fulfill #{item.name}", "/merchant/itemorders/#{item.order_item(@order.id)}", method: "patch" %>
+    <%= link_to "Fulfill #{item.name}", "/merchant/itemorders/#{item.order_item(@order.id)}?order_id=#{@order.id}", method: "patch" %>
     <img src = "<%= item.image  %>">
     <%= item.price  %>
     <%= item.order_quantity(@order.id) %>

@@ -5,7 +5,7 @@
 
   <h3>Merchant Orders To Fulfill:</h3>
   <% @merchant.pending_orders.each do |order| %>
-    <%= link_to "#{order.id}", "/merchant/orders/#{order.id}" %>
+    <%= link_to "#{order.id}", "/merchant/orders/#{order.id}"  %>
     <p><%= order.created_at %></p>
     <h3>Order Quantity:</h3>
     <p><%= order.item_qty(@merchant.id) %></p>
