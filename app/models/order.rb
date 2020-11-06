@@ -36,8 +36,8 @@ class Order < ApplicationRecord
   end
 
   def cancel_order
-    self.update(status: 'cancelled')
+    self.update(status: 'Cancelled')
     self.return_items
-    self.item_orders.update(status: 'unfulfilled')
+    self.item_orders.update(status: 'Unfulfilled')
   end
 end

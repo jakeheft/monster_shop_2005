@@ -215,11 +215,11 @@ describe Order, type: :model do
       order_item_1 = order_1.item_orders.create!(item: chain, price: chain.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
       order_item_2 =  order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 'Pending', merchant_id: bike_shop.id)
       order_item_3 = order_1.item_orders.create!(item: rack, price: rack.price, quantity: 2, status: 'Pending', merchant_id: print_shop.id)
-      
+
       order_1.cancel_order
 
-      expect(order_1.status).to eq("cancelled")
-      expect(order_1.item_orders.all? { |item_order| item_order.status == "unfulfilled"}).to eq(true)
+      expect(order_1.status).to eq("Cancelled")
+      expect(order_1.item_orders.all? { |item_order| item_order.status == "Unfulfilled"}).to eq(true)
     end
   end
 end
