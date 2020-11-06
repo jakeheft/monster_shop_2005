@@ -1,11 +1,11 @@
+# frozen_string_literal: true
+
 class UsersDashboardController < UserBaseController
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
-  def update 
+  def update
     @current_user.assign_attributes(user_params)
     if @current_user.save
       redirect_to '/profile', notice: 'Your profile has been updated'
