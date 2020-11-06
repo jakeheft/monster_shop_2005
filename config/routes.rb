@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
+  def put(*) end
   root "welcome#index"
 
   resources :merchants
@@ -11,14 +11,14 @@ Rails.application.routes.draw do
     resources :items
   end
 
-  resources :items, only: %i[new create] do 
+  resources :items, only: %i[new create] do
     resources :reviews, only: %i[new create]
   end
 
   resources :items, only: %i[new create] do
     resources :reviews, only: %i[new create]
   end
-  
+
   resources :reviews, only: %i[edit update destroy]
 
   post "/cart/:item_id", to: "cart#add_item"
@@ -53,16 +53,16 @@ Rails.application.routes.draw do
 
   get "/register", to: "users#new"
 
-  
+
   get "/profile", to: "users_dashboard#show"
   get "/profile/edit", to: "users_dashboard#edit"
   patch "/profile", to: "users_dashboard#update"
-  
+
   get '/profile/orders', to: "profile_orders#index"
   get '/profile/orders/:id', to: "profile_orders#show"
   patch "/profile/orders/:id", to: "profile_orders#cancel"
 
-  
+
   get "/password/edit", to: "passwords#edit"
   patch "/password", to: "passwords#update"
 
