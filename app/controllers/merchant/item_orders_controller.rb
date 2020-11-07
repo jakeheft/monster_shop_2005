@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Merchant::ItemOrdersController < Merchant::BaseController
   def update
     item_order = ItemOrder.find(params[:itemorder_id])
