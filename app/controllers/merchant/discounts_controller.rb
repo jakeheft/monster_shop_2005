@@ -15,6 +15,10 @@ class Merchant::DiscountsController < Merchant::BaseController
     redirect_to '/merchant/discounts', notice: "Your discount has successfully been created"
   end
 
+  def edit
+    
+  end
+
   private
   def discount_params
     params.permit(:percent, :min_qty)
