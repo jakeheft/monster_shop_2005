@@ -32,10 +32,10 @@ Rails.application.routes.draw do
   namespace :merchant do
     resources :orders, only: %i[show]
     resources :items
-  get "/", to: "dashboard#show"
-  patch "/itemorders/:itemorder_id", to: "item_orders#update"
-  post "/items/deactivate", to: "items#deactivate"
-  post "/items/activate", to: "items#activate"
+    get "/", to: "dashboard#show"
+    patch "/itemorders/:itemorder_id", to: "item_orders#update"
+    post "/items/deactivate", to: "items#deactivate"
+    post "/items/activate", to: "items#activate"
   end
 
   namespace :admin do
