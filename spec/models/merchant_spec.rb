@@ -15,6 +15,7 @@ describe Merchant, type: :model do
     it { should have_many :items }
     it { should have_many(:users).conditions(role: :merchant) }
     it { should have_many(:orders).through(:items) }
+    it { should have_many :discounts }
   end
 
   describe 'instance methods' do
