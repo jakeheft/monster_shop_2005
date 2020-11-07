@@ -22,10 +22,11 @@ class Merchant::DiscountsController < Merchant::BaseController
   def update
     discount = Discount.find(params[:id])
     discount.assign_attributes(discount_params)
-    if discount.save
+    if discount.valid_attributes?
+      discount.save
       redirect_to '/merchant/discounts', notice: "Your discount has been updated"
     else
-      flash[:error] = @current_user.errors.full_messages.uniq
+      flash[:error] = "Must enter a valid percentage and minimum quantity"
       redirect_to "/merchant/discounts/#{discount.id}/edit"
     end
   end
