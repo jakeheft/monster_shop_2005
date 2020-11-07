@@ -12,4 +12,12 @@ class ItemOrder <ApplicationRecord
   def items_left
     (self.item.inventory - self.quantity)
   end
+
+  def fulfill#(order)
+    assign_attributes(status: 'Fulfilled')
+    # if self.save
+      order.order_status
+      item.update(inventory: items_left)
+    # end
+  end
 end

@@ -30,11 +30,11 @@ class Item <ApplicationRecord
   end
 
   def self.top_five
-    Item.joins(:item_orders).select('items.name, item_orders.quantity').order('quantity desc').limit(5)
+    Item.joins(:item_orders).select('items.name, sum(item_orders.quantity) as quantity_ordered').group(:id).order('quantity_ordered desc').limit(5)
   end
 
   def self.bottom_five
-    Item.joins(:item_orders).select('items.name, item_orders.quantity').order('quantity asc').limit(5)
+    Item.joins(:item_orders).select('items.name, sum(item_orders.quantity) as quantity_ordered').group(:id).order('quantity_ordered asc').limit(5)
   end
 
   def order_quantity(order_id)
@@ -44,7 +44,7 @@ class Item <ApplicationRecord
   def status(order_id)
     self.item_orders.find_by('order_id =?', order_id).status
   end
-  
+
   def order_item(order_id)
     self.item_orders.find_by('order_id =?', order_id).id
   end
