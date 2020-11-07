@@ -1,3 +1,12 @@
 <h1><%= @merchant.name %>'s Bulk Discounts</h1>
 
 <%= link_to "Create A New Bulk Discount", '/merchant/discounts/new' %>
+
+<h3>Current Bulk Discounts</h3>
+
+<% @merchant.discounts.each do |discount| %>
+  <div id="discount-<%= discount.id %>">
+    <p>Minimum Order Quantity: <%= discount.min_qty %></p>
+    <p>Discount: <%= number_to_percentage(discount.percent, precision: 0) %></p><br>
+  <div>
+<% end %>

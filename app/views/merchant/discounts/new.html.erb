@@ -1,0 +1,9 @@
+<%= form_tag '/merchant/discounts' do %>
+  <%= label_tag :percent %>
+  <%= number_field_tag :percent %>
+
+  <%= label_tag :min_qty %>
+  <%= number_field_tag :min_qty %>
+
+  <%= submit_tag "Create Discount" %>
+<% end %>
