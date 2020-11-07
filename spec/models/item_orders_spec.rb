@@ -14,6 +14,7 @@ describe ItemOrder, type: :model do
     it { should belong_to :item }
     it { should belong_to :order }
     it { should belong_to :merchant }
+    it { should belong_to(:discount).optional(true) }
   end
 
   describe 'instance methods' do
