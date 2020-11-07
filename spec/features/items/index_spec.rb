@@ -96,7 +96,6 @@ RSpec.describe "Items Index Page" do
 
               within("#popularity_table") do
               expect(page).to have_content("Most Popular Items:")
-
               expect(page).to have_content(tire.name)
               expect(page).to have_content(order.item_orders[0].quantity)
               expect(page).to have_content(pen.name)
