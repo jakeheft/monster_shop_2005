@@ -39,9 +39,6 @@ class Merchant::DiscountsController < Merchant::BaseController
 
   def destroy
     discount = Discount.find(params[:id])
-    # require "pry"; binding.pry
-    # discount.delete
-    # ItemOrder.where(discount_id: discount.id).destroy_all
     if discount.destroy
       redirect_to '/merchant/discounts', notice: "Discount has been deleted"
     else
