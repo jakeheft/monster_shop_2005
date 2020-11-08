@@ -11,8 +11,14 @@ class Merchant::DiscountsController < Merchant::BaseController
 
   def create
     merchant = current_user.merchant
-    merchant.discounts.create!(discount_params)
-    redirect_to '/merchant/discounts', notice: "Your discount has successfully been created"
+    discount = merchant.discounts.new(discount_params)
+    if discount.valid_attributes?
+      discount.save
+      redirect_to '/merchant/discounts', notice: "Your discount has successfully been created"
+    else
+      flash[:error] = "Must enter a valid percentage and minimum quantity"
+      redirect_to "/merchant/discounts/new"
+    end
   end
 
   def edit
