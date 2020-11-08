@@ -8,6 +8,9 @@ class Cart
   def add_item(item)
     @contents[item] = 0 if !@contents[item]
     @contents[item] += 1
+    if apply_discount?(item)
+
+    end
   end
 
   def subtract_item(item)
@@ -28,6 +31,7 @@ class Cart
   end
 
   def subtotal(item)
+    if 
     item.price * @contents[item.id.to_s]
   end
 
@@ -35,6 +39,12 @@ class Cart
     @contents.sum do |item_id,quantity|
       Item.find(item_id).price * quantity
     end
+  end
+
+  def apply_discount?(item)
+    cart_qty = @contents[item]
+    merchant = Merchant.select('merchants.*').joins(:items).where('items.id = ?', item).first
+    merchant.discounts.where('min_qty <= ?', cart_qty) != []
   end
 
 end
