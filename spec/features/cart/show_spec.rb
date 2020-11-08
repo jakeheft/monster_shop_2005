@@ -72,6 +72,8 @@ RSpec.describe 'Cart show' do
         expect(page).to_not have_link('Empty Cart')
       end
     end
+  end
+  describe "When I have items in my cart" do
     describe 'I see a button or link to increment the count of items I want to purchase' do
       it "I cannot increment the count beyond the item's inventory size" do
         mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80_203)
@@ -128,6 +130,40 @@ RSpec.describe 'Cart show' do
         within ".cart-items" do
           expect(page).not_to have_content(pencil.name)
         end
+      end
+    end
+
+    describe "When I increase the quantity of my items to the minimum quantity for a discount" do
+      it "The discount is automatically applied to that item" do
+        meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80_203)
+        user = User.create!(name: 'JakeBob',
+          address: '124 Main St',
+          city: 'Denver',
+          state: 'Colorado',
+          zip: '80202',
+          email: 'Bob1234@hotmail.com',
+          password: 'heftybags',
+          password_confirmation: 'heftybags',
+          role: 1
+        )
+        tire = meg.items.create(name: 'Gatorskins', description: "They'll never pop!", price: 100, image: 'https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588', inventory: 1200)
+        discount = meg.discounts.create!(
+          percent: 25,
+          min_qty: 100
+        )
+        order = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Pending')
+        item_order =  order.item_orders.create!(item: tire, price: tire.price, quantity: 99, status: 'Pending', merchant_id: meg.id)
+        visit '/login'
+
+        fill_in :email, with: 'Bob1234@hotmail.com'
+        fill_in :passowrd, with: 'heftybags'
+
+        click_on 'Login'
+
+        visit "/items/#{tire.id}"
+        click_on 'Add To Cart'
+        click_link 'Cart'
+        save_and_open_page
       end
     end
   end
