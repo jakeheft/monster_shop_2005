@@ -72,5 +72,35 @@ describe "As a merchant employee" do
       # expect(page).to_not have_content(discount.min_qty)
       # expect(page).to_not have_content(discount.percent)
     end
+
+    it "A merchant can have multiple discounts in the system" do
+      bike_shop = Merchant.create!(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      merchant_user = bike_shop.users.create!(name: 'JakeBob',
+        address: '124 Main St',
+        city: 'Denver',
+        state: 'Colorado',
+        zip: '80202',
+        email: 'Bob1234@hotmail.com',
+        password: 'heftybags',
+        password_confirmation: 'heftybags',
+        role: 1
+      )
+      discount_1 = bike_shop.discounts.create!(
+        percent: 10,
+        min_qty: 15
+      )
+      discount_2 = bike_shop.discounts.create!(
+        percent: 20,
+        min_qty: 50
+      )
+      discount_3 = bike_shop.discounts.create!(
+        percent: 30,
+        min_qty: 70
+      )
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_user)
+
+      expect(bike_shop.discounts).to eq([discount_1, discount_2, discount_3])
+    end
   end
 end
