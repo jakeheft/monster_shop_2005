@@ -3,6 +3,8 @@
   <h4><%= @merchant.full_address %></h4>
   <%= link_to "My Items", "/merchant/items?merchant_id=#{@merchant.id}" %>
 
+  <%= link_to "Manage Bulk Discounts", '/merchant/discounts' %>
+
   <h3>Merchant Orders To Fulfill:</h3>
   <% @merchant.pending_orders.each do |order| %>
     <p>Order Number: <%= link_to "#{order.id}", "/merchant/orders/#{order.id}"  %></p>
@@ -12,5 +14,4 @@
     <!--<h3>Total Value of Order:</h3>-->
     <p>Total Value of Order: <%= number_to_currency(order.total_value(@merchant.id)) %></p><br>
   <% end %>
-  <%= link_to "Manage Bulk Discounts", '/merchant/discounts' %>
 </body>
