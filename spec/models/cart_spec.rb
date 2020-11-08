@@ -55,5 +55,30 @@ RSpec.describe Cart do
       expect(@cart.subtotal(@ogre)).to eq(20)
       expect(@cart.subtotal(@giant)).to eq(100)
     end
+
+    it '#apply_discount?()' do
+      discount = @megan.discounts.create!(
+        percent: 10,
+        min_qty: 100
+      )
+      discount_2 = @brian.discounts.create!(
+        percent: 10,
+        min_qty: 200
+      )
+      unicorn = @brian.items.create!(name: 'Unicorn', description: "I'm a Unicorn!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', inventory: 500)
+      cart = Cart.new({
+        @ogre.id.to_s => 99,
+        @giant.id.to_s => 200,
+        @hippo.id.to_s => 150,
+        unicorn.id.to_s => 200
+        })
+
+      expect(cart.apply_discount?(@ogre.id.to_s)).to eq(false)
+      cart.add_item(@ogre.id.to_s)
+      expect(cart.apply_discount?(@ogre.id.to_s)).to eq(true)
+      expect(cart.apply_discount?(@giant.id.to_s)).to eq(true)
+      expect(cart.apply_discount?(@hippo.id.to_s)).to eq(false)
+      expect(cart.apply_discount?(unicorn.id.to_s)).to eq(true)
+    end
   end
 end
