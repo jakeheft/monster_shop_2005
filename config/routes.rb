@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   namespace :merchant do
     resources :orders, only: %i[show]
     resources :items
+    resources :discounts, except: [:show]
     get "/", to: "dashboard#show"
     patch "/itemorders/:itemorder_id", to: "item_orders#update"
     post "/items/deactivate", to: "items#deactivate"

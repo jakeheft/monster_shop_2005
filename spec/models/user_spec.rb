@@ -1,6 +1,23 @@
 require 'rails_helper'
 
 describe User, type: :model do
+  describe "validations" do
+    it { should validate_uniqueness_of :email }
+    it { should validate_presence_of :email }
+    it { should validate_presence_of :name }
+    it { should validate_presence_of :address }
+    it { should validate_presence_of :city }
+    it { should validate_presence_of :state }
+    it { should validate_presence_of :zip }
+    it { should validate_presence_of :password }
+    it { should validate_presence_of :password_confirmation }
+  end
+
+  describe "relationships" do
+    it { should have_many :orders }
+    it { should belong_to(:merchant).optional(true) }
+  end
+
   describe "password attributes" do
     it "needs password confirmation" do
     jake = User.create(name: 'JakeBob',
@@ -44,23 +61,5 @@ describe User, type: :model do
                         )
       expect(jake.full_address).to eq('124 Main St, Denver, Colorado, 80202')
     end
-  end
-
-  describe "validations" do
-    it { should validate_uniqueness_of :email }
-
-    it { should validate_presence_of :email }
-    it { should validate_presence_of :name }
-    it { should validate_presence_of :address }
-    it { should validate_presence_of :city }
-    it { should validate_presence_of :state }
-    it { should validate_presence_of :zip }
-    it { should validate_presence_of :password }
-    it { should validate_presence_of :password_confirmation }
-  end
-
-  describe "relationships" do
-    it { should have_many :orders }
-    it { should belong_to(:merchant).optional(true) }#.conditions(role: :merchant) }
   end
 end
