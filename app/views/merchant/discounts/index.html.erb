@@ -6,8 +6,10 @@
 
 <% @merchant.discounts.each do |discount| %>
   <div id="discount-<%= discount.id %>">
+    <p>ID: <%= discount.id %></p>
     <p>Minimum Order Quantity: <%= discount.min_qty %></p>
-    <p>Discount: <%= number_to_percentage(discount.percent, precision: 0) %></p><br>
+    <p>Discount: <%= number_to_percentage(discount.percent, precision: 0) %></p>
     <%= button_to "Edit Discount", "/merchant/discounts/#{discount.id}/edit", method: :get %>
-  <div>
+    <%= button_to "Delete Discount", '/merchant/discounts', method: :destroy %>
+  <div><br>
 <% end %>

@@ -29,6 +29,7 @@ describe "As a merchant employee" do
       expect(current_path).to eq('/merchant/discounts')
       expect(page).to have_content("Minimum Order Quantity: 15")
       expect(page).to have_content("10%")
+      expect(page).to have_content("Your discount has been updated")
     end
 
     it "If I enter incorrect attributes, I get an error" do
