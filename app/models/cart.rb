@@ -8,9 +8,6 @@ class Cart
   def add_item(item)
     @contents[item] = 0 if !@contents[item]
     @contents[item] += 1
-    if apply_discount?(item)
-
-    end
   end
 
   def subtract_item(item)
@@ -31,8 +28,10 @@ class Cart
   end
 
   def subtotal(item)
-    if apply_discount?(item)
-      item.price * @contents[item.id.to_s]
+    if apply_discount?(item.id.to_s)
+      discount = discount_selection(item.id.to_s, item.merchant).percent
+      price = item.price * @contents[item.id.to_s]
+      price * (1 - discount/100)
     else
       item.price * @contents[item.id.to_s]
     end
