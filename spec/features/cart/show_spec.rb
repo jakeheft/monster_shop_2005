@@ -144,26 +144,30 @@ RSpec.describe 'Cart show' do
           email: 'Bob1234@hotmail.com',
           password: 'heftybags',
           password_confirmation: 'heftybags',
-          role: 1
+          role: 0
         )
         tire = meg.items.create(name: 'Gatorskins', description: "They'll never pop!", price: 100, image: 'https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588', inventory: 1200)
         discount = meg.discounts.create!(
           percent: 25,
           min_qty: 100
         )
-        order = Order.create!(name: 'JakeBob', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Pending')
-        item_order =  order.item_orders.create!(item: tire, price: tire.price, quantity: 99, status: 'Pending', merchant_id: meg.id)
+
         visit '/login'
 
         fill_in :email, with: 'Bob1234@hotmail.com'
-        fill_in :passowrd, with: 'heftybags'
+        fill_in :password, with: 'heftybags'
 
         click_on 'Login'
 
         visit "/items/#{tire.id}"
         click_on 'Add To Cart'
         click_link 'Cart'
-        save_and_open_page
+
+        within "#cart-item-#{tire.id}" do
+          99.times { click_on '+' }
+          expect(page).to have_content(100)
+          expect(page).to have_content("$7,500.00")
+        end
       end
     end
   end

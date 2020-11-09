@@ -104,12 +104,12 @@ RSpec.describe Cart do
 
 
       cart = Cart.new({
-        @ogre.id.to_s => 99, # no discount
-        @giant.id.to_s => 100, #discount 1
-        @hippo.id.to_s => 150, # discount 3
-        bear.id.to_s => 200, # discount 2
-        unicorn.id.to_s => 200, #discount 3
-        fairy.id.to_s => 100 #no discount
+        @ogre.id.to_s => 99,
+        @giant.id.to_s => 100,
+        @hippo.id.to_s => 150,
+        bear.id.to_s => 200,
+        unicorn.id.to_s => 200,
+        fairy.id.to_s => 100
         })
 
       expect(cart.discount_selection(@ogre.id.to_s, @ogre.merchant)).to eq(nil)
