@@ -41,8 +41,6 @@ class Merchant::DiscountsController < Merchant::BaseController
     discount = Discount.find(params[:id])
     if discount.destroy
       redirect_to '/merchant/discounts', notice: "Discount has been deleted"
-    else
-      redirect_to '/merchant/discounts', notice: "Discount has NOT been deleted"
     end
   end
 
