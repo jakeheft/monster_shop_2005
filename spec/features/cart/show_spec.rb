@@ -168,6 +168,7 @@ RSpec.describe 'Cart show' do
           expect(page).to have_content(100)
           expect(page).to have_content("$7,500.00")
         end
+        expect(page).to have_content("A bulk discount has been applied to #{tire.name}!")
       end
     end
   end
