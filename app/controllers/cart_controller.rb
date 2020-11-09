@@ -27,7 +27,7 @@ class CartController < CartBaseController
       if item.inventory > session[:cart][item.id.to_s]
         cart.add_item(item.id.to_s)
         flash[:success] = "Another #{item.name} was successfully added to your cart"
-        flash[:notice] = "A bulk discount has been applied to #{item.name}!" if cart.apply_discount?(item.id.to_s)
+        flash[:notice] = "A bulk discount has been applied to #{item.name}!" if cart.apply_discount?(item)
         redirect_to "/cart"
       else
         flash[:notice] = "Not Enough Inventory for #{item.name}"
