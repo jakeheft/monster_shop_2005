@@ -41,9 +41,10 @@ class Cart
     # @contents.sum do |item_id,quantity|
     #   Item.find(item_id).price * quantity
     # end
-    items = @contents.keys.map do |item_id|
-      Item.find(item_id)
-    end
+    # items = @contents.keys.map do |item_id|
+    #   Item.find(item_id)
+    # end
+    items = Item.find(@contents.keys)
     items.sum do |item|
       subtotal(item)
     end
