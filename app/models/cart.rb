@@ -27,11 +27,14 @@ class Cart
     item_quantity
   end
 
+  def discounted_price(item, discount)
+    item.price * (1 - discount / 100)
+  end
+
   def subtotal(item)
     if apply_discount?(item.id.to_s)
       discount = discount_selection(item.id.to_s, item.merchant).percent
-      price = item.price * @contents[item.id.to_s]
-      price * (1 - discount/100)
+      discounted_price(item, discount) * @contents[item.id.to_s]
     else
       item.price * @contents[item.id.to_s]
     end
