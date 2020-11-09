@@ -80,5 +80,44 @@ RSpec.describe Cart do
       expect(cart.apply_discount?(@hippo.id.to_s)).to eq(false)
       expect(cart.apply_discount?(unicorn.id.to_s)).to eq(true)
     end
+
+    it '#discount_selection()' do
+      discount_1 = @megan.discounts.create!(
+        percent: 10,
+        min_qty: 100
+      )
+      discount_2 = @megan.discounts.create!(
+        percent: 20,
+        min_qty: 105
+      )
+      discount_3 = @brian.discounts.create!(
+        percent: 30,
+        min_qty: 105
+      )
+      discount_4 = @brian.discounts.create!(
+        percent: 20,
+        min_qty: 200
+      )
+      bear = @megan.items.create!(name: 'Bear', description: "I'm an Bear!", price: 20, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', inventory: 500)
+      unicorn = @brian.items.create!(name: 'Unicorn', description: "I'm a Unicorn!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', inventory: 500)
+      fairy = @brian.items.create!(name: 'fairy', description: "I'm a fairy!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', inventory: 500)
+
+
+      cart = Cart.new({
+        @ogre.id.to_s => 99, # no discount
+        @giant.id.to_s => 100, #discount 1
+        @hippo.id.to_s => 150, # discount 3
+        bear.id.to_s => 200, # discount 2
+        unicorn.id.to_s => 200, #discount 3
+        fairy.id.to_s => 100 #no discount
+        })
+
+      expect(cart.discount_selection(@ogre.id.to_s, @ogre.merchant)).to eq(nil)
+      expect(cart.discount_selection(@giant.id.to_s, @giant.merchant)).to eq(discount_1)
+      expect(cart.discount_selection(@hippo.id.to_s, @hippo.merchant)).to eq(discount_3)
+      expect(cart.discount_selection(bear.id.to_s, bear.merchant)).to eq(discount_2)
+      expect(cart.discount_selection(unicorn.id.to_s, unicorn.merchant)).to eq(discount_3)
+      expect(cart.discount_selection(fairy.id.to_s, fairy.merchant)).to eq(nil)
+    end
   end
 end
