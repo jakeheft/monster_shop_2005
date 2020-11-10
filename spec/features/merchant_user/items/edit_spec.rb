@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 RSpec.describe 'Merchant edits an item' do
   describe 'And I click the edit button or link next to any item Then I am taken to a form similar to the new item form' do
     before(:each) do

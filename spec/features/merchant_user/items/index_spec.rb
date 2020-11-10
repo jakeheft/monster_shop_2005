@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 RSpec.describe 'Merchant Items Index Page' do
   describe 'When I visit the merchant items page' do
     before(:each) do

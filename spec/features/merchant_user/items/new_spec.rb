@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 RSpec.describe 'Merchant Items Index Page' do
   describe 'When I visit the merchant items page' do
     before(:each) do
@@ -69,7 +67,7 @@ RSpec.describe 'Merchant Items Index Page' do
       inventory = 25
 
       click_on "Add New Item"
-      
+
       fill_in :item_name, with: name
       fill_in :item_price, with: price
       fill_in :item_description, with: description
@@ -107,7 +105,7 @@ RSpec.describe 'Merchant Items Index Page' do
       inventory = ""
 
       click_on "Add New Item"
-      
+
       fill_in :item_name, with: name
       fill_in :item_price, with: price
       fill_in :item_description, with: description
