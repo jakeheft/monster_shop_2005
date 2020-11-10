@@ -4,7 +4,7 @@
     <p>Item: <%= link_to "#{item.name}", "/merchant/items/#{item.id}" %> &nbsp&nbsp&nbsp
     <%= link_to "Fulfill #{item.name}", "/merchant/itemorders/#{item.order_item(@order.id)}?order_id=#{@order.id}", method: "patch" %></p>
     <img src = "<%= item.image  %>">
-    <p>Price: <%= number_to_currency(item.price)  %></p>
+    <p>Price: <%= number_to_currency(item.actual_price(@order))  %></p>
     <p>Quantity: <%= item.order_quantity(@order.id) %></p>
     <p>Order Status: <%= item.status(@order.id) %></p>
 
