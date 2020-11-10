@@ -52,4 +52,8 @@ class Item <ApplicationRecord
   def actual_price(order)
     ItemOrder.where('item_id = ?', id).where('order_id = ?', order.id).pluck(:price).first
   end
+
+  def quantity_in(order)
+    ItemOrder.where('item_id = ?', id).where('order_id = ?', order.id).pluck(:quantity).first
+  end
 end
