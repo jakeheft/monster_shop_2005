@@ -48,4 +48,8 @@ class Item <ApplicationRecord
   def order_item(order_id)
     self.item_orders.find_by('order_id =?', order_id).id
   end
+
+  def actual_price(order)
+    ItemOrder.where('item_id = ?', id).pluck(:price).first
+  end
 end
