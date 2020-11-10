@@ -1,9 +1,9 @@
-<%= form_tag '/merchant/discounts' do %>
-  <%= label_tag :percent %>
-  <%= number_field_tag :percent %>
+<%= form_with model: [ :merchant, @discount ], local: true do |f| %>
+  <%= f.label :percent %>
+  <%= f.number_field :percent %>
 
-  <%= label_tag :min_qty %>
-  <%= number_field_tag :min_qty %>
+  <%= f.label :min_qty, "Minimum Quantity" %>
+  <%= f.number_field :min_qty %>
 
-  <%= submit_tag "Create Discount" %>
+  <%= f.submit %>
 <% end %>
