@@ -10,23 +10,23 @@
       <p>Order Status: <%= item.status(@order.id) %></p>
 
     <% elsif item.status(@order.id) == "Fulfilled" %>
-     <%= item.name %>
+     <p>Item: <%= item.name %></p>
       <img src = "<%= item.image  %>">
-      <%= item.price  %>
-      <%= item.order_quantity(@order.id) %>
+      <p>Price: <%= number_to_currency(item.price)  %></p>
+      <p>Quantity: <%= item.order_quantity(@order.id) %></p>
       <h5> <%= "#{item.name} has been fulfilled" %> </h5>
 
     <% elsif item.order_quantity(@order.id) >= item.inventory && item.status(@order.id) == "Pending" %>
-      <%= item.name %>
+      <p><%= item.name %></p>
       <img src = "<%= item.image  %>">
-      <%= item.price  %>
-      <%= item.order_quantity(@order.id) %>
+      <p> Item: <%= item.price  %></p>
+      <p>Quantity: <%= item.order_quantity(@order.id) %></p>
       <h5> <%= item.name %> Can't fullfill - Not enough items in inventory </h5>
 
     <% else %>
-      <%= item.name %>
-      <%= item.price  %>
-      <%= item.order_quantity(@order.id) %>
+      <p><%= item.name %></p>
+      <p><%= item.price  %></p>
+      <p><%= item.order_quantity(@order.id) %></p>
     <% end %>
   </div>
 <% end %>
