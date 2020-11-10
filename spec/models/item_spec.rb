@@ -5,7 +5,7 @@ describe Item, type: :model do
     it { should validate_presence_of :name }
     it { should validate_presence_of :description }
     it { should validate_presence_of :price }
-    
+
     it { should validate_presence_of :inventory }
     it { should validate_inclusion_of(:active?).in_array([true,false]) }
   end
@@ -59,7 +59,7 @@ describe Item, type: :model do
       expect(@chain.no_orders?).to eq(false)
     end
 
-    it '#order_quantity' do 
+    it '#order_quantity' do
       print_shop = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       user = User.create!(
@@ -96,7 +96,7 @@ describe Item, type: :model do
 
       expect(tire.order_quantity(order_1.id)).to eq(2)
     end
-    
+
     it '#status' do
       print_shop = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -171,6 +171,32 @@ describe Item, type: :model do
       order_item_5 =  order_2.item_orders.create!(item: tire, price: tire.price, quantity: 10, status: 'Pending', merchant_id: bike_shop.id)
 
       expect(chain.order_item(order_1.id)).to eq(order_item_1.id)
+    end
+
+    it '#actual_price()' do
+      meg = Merchant.create!(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80_203)
+      user = User.create!(name: 'JakeBob',
+        address: '124 Main St',
+        city: 'Denver',
+        state: 'Colorado',
+        zip: '80202',
+        email: 'Bob1234@hotmail.com',
+        password: 'heftybags',
+        password_confirmation: 'heftybags',
+        role: 0
+      )
+      tire = meg.items.create!(name: 'Gatorskins', description: "They'll never pop!", price: 100, image: 'https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588', inventory: 1200)
+      horn = meg.items.create!(name: 'Bike Horn', description: "Honk it out!", price: 100, image: 'https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588', inventory: 1200)
+      discount = meg.discounts.create!(
+        percent: 25,
+        min_qty: 5
+      )
+      order = Order.create!(name: 'Meg', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Pending')
+      order_item_1 = order.item_orders.create!(item: tire, price: 75, quantity: 5, status: 'Pending', merchant_id: meg.id)
+      order_item_1 = order.item_orders.create!(item: horn, price: horn.price, quantity: 1, status: 'Pending', merchant_id: meg.id)
+
+      expect(tire.actual_price(order)).to eq(75)
+      expect(horn.actual_price(order)).to eq(100)
     end
 
     describe "class methods" do
