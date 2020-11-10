@@ -14,11 +14,9 @@ class ItemOrder <ApplicationRecord
     (self.item.inventory - self.quantity)
   end
 
-  def fulfill#(order)
+  def fulfill
     assign_attributes(status: 'Fulfilled')
-    # if self.save
-      order.order_status
-      item.update(inventory: items_left)
-    # end
+    order.order_status
+    item.update(inventory: items_left)
   end
 end

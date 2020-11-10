@@ -10,8 +10,7 @@ class Merchant::DiscountsController < Merchant::BaseController
 
   def create
     merchant = current_user.merchant
-    ### remove 'new' from new_discount_params when all forms on form tags
-    discount = merchant.discounts.new(new_discount_params)
+    discount = merchant.discounts.new(discount_params)
     if discount.valid_attributes?
       discount.save
       redirect_to '/merchant/discounts', notice: "Your discount has successfully been created"
@@ -27,7 +26,7 @@ class Merchant::DiscountsController < Merchant::BaseController
 
   def update
     discount = Discount.find(params[:id])
-    discount.assign_attributes(new_discount_params)
+    discount.assign_attributes(discount_params)
     if discount.valid_attributes?
       discount.save
       redirect_to '/merchant/discounts', notice: "Your discount has been updated"
@@ -46,10 +45,6 @@ class Merchant::DiscountsController < Merchant::BaseController
 
   private
   def discount_params
-    params.permit(:percent, :min_qty)
-  end
-
-  def new_discount_params
     params.require(:discount).permit(:percent, :min_qty)
   end
 end
