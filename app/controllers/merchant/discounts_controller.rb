@@ -27,7 +27,7 @@ class Merchant::DiscountsController < Merchant::BaseController
 
   def update
     discount = Discount.find(params[:id])
-    discount.assign_attributes(discount_params)
+    discount.assign_attributes(new_discount_params)
     if discount.valid_attributes?
       discount.save
       redirect_to '/merchant/discounts', notice: "Your discount has been updated"

@@ -1,0 +1,9 @@
+<%= form_with model: [ :merchant, @discount ], method: method, local: true do |f| %>
+  <%= f.label :percent %>
+  <%= f.number_field :percent %>
+
+  <%= f.label :min_qty, "Minimum Quantity" %>
+  <%= f.number_field :min_qty %>
+
+  <%= f.submit %>
+<% end %>

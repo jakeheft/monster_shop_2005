@@ -1,9 +1,1 @@
-<%= form_tag "/merchant/discounts/#{@discount.id}", method: :patch do %>
-  <%= label_tag :percent %>
-  <%= number_field_tag :percent, @discount.percent %>
-
-  <%= label_tag :min_qty %>
-  <%= number_field_tag :min_qty, @discount.min_qty %>
-
-  <%= submit_tag "Update Discount" %>
-<% end %>
+<%= render partial: 'form', locals: {method: :patch} %>
