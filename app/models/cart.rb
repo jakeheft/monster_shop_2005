@@ -27,14 +27,37 @@ class Cart
     item_quantity
   end
 
+  def discounted_price(item, discount)
+    item.price * (1 - discount / 100)
+  end
+
   def subtotal(item)
-    item.price * @contents[item.id.to_s]
+    if apply_discount?(item)
+      discount = discount_selection(item, item.merchant).percent
+      discounted_price(item, discount) * @contents[item.id.to_s]
+    else
+      item.price * @contents[item.id.to_s]
+    end
   end
 
   def total
-    @contents.sum do |item_id,quantity|
-      Item.find(item_id).price * quantity
+    items = Item.find(@contents.keys)
+    items.sum do |item|
+      subtotal(item)
     end
+  end
+
+  def apply_discount?(item)
+    merchant = Merchant.select('merchants.*').joins(:items).where('items.id = ?', item).first
+    merchant.discounts.where('min_qty <= ?', quantity_of(item)) != []
+  end
+
+  def discount_selection(item, merchant = item.merchant)
+    merchant.discounts.where('min_qty <= ?', quantity_of(item)).order('percent DESC').first
+  end
+
+  def quantity_of(item)
+    @contents[item.id.to_s]
   end
 
 end

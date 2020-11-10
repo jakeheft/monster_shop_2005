@@ -22,7 +22,7 @@ describe "As a merchant employee" do
 
       visit "/merchant/discounts/#{discount.id}/edit"
 
-      fill_in :min_qty, with: 15
+      fill_in "Minimum Quantity", with: 15
 
       click_button "Update Discount"
 
@@ -52,7 +52,7 @@ describe "As a merchant employee" do
 
       visit "/merchant/discounts/#{discount.id}/edit"
 
-      fill_in :min_qty, with: 0
+      fill_in "Minimum Quantity", with: 0
 
       click_button "Update Discount"
 
@@ -60,7 +60,7 @@ describe "As a merchant employee" do
 
       visit "/merchant/discounts/#{discount.id}/edit"
 
-      fill_in :min_qty, with: -5
+      fill_in "Minimum Quantity", with: -5
 
       click_button "Update Discount"
 
@@ -68,7 +68,7 @@ describe "As a merchant employee" do
 
       visit "/merchant/discounts/#{discount.id}/edit"
 
-      fill_in :min_qty, with: 0.5
+      fill_in "Minimum Quantity", with: 0.5
 
       click_button "Update Discount"
 
@@ -76,7 +76,7 @@ describe "As a merchant employee" do
 
       visit "/merchant/discounts/#{discount.id}/edit"
 
-      fill_in :percent, with: 0
+      fill_in 'Percent', with: 0
 
       click_button "Update Discount"
 
@@ -84,7 +84,7 @@ describe "As a merchant employee" do
 
       visit "/merchant/discounts/#{discount.id}/edit"
 
-      fill_in :percent, with: 100
+      fill_in 'Percent', with: 100
 
       click_button "Update Discount"
 

@@ -145,27 +145,61 @@ describe "As a user" do
         expect(new_order.status).to eq("Pending")
         expect(new_order.user).to eq(user)
         expect(page).to have_content("Your order has been created")
-
-        # within "#item-#{item.id}" do
-        #   expect(page).to have_link(item.name)
-        #   expect(page).to have_link("#{item.merchant.name}")
-        #   expect(page).to have_content("$#{item.price}")
-        #   expect(page).to have_content("1")
-        #   expect(page).to have_content("$10")
-        # end
-        # within "#grandtotal" do
-        #   expect(page).to have_content("Total: $10")
-        # end
-
-        # within "#datecreated" do
-        #   expect(page).to have_content(new_order.created_at)
-        # end
-        # within "#item-#{new_order.id}" do
-        #   expect(page).to have_content(item.name)
-        #   expect(page).to have_content(item.price)
-        #   expect(page).to have_content(new_order.grandtotal)
-        # end
         expect(page).to have_content("Cart: 0")
+      end
+
+      it "When I create an order where a discount applies, that's reflected in the total" do
+        meg = Merchant.create!(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80_203)
+        user = User.create!(name: 'JakeBob',
+          address: '124 Main St',
+          city: 'Denver',
+          state: 'Colorado',
+          zip: '80202',
+          email: 'Bob1234@hotmail.com',
+          password: 'heftybags',
+          password_confirmation: 'heftybags',
+          role: 0
+        )
+        tire = meg.items.create!(name: 'Gatorskins', description: "They'll never pop!", price: 100, image: 'https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588', inventory: 1200)
+        discount = meg.discounts.create!(
+          percent: 25,
+          min_qty: 5
+        )
+
+        visit '/login'
+
+        fill_in :email, with: 'Bob1234@hotmail.com'
+        fill_in :password, with: 'heftybags'
+
+        click_on 'Login'
+
+        visit "/items/#{tire.id}"
+        click_on 'Add To Cart'
+
+        visit '/cart'
+
+        within "#cart-item-#{tire.id}" do
+          4.times { click_on '+' }
+          expect(page).to have_content(5)
+        end
+
+        expect(page).to have_content("A bulk discount has been applied to #{tire.name}!")
+
+        click_on 'Checkout'
+
+        fill_in :name, with: user.name
+        fill_in :address, with: user.address
+        fill_in :city, with: user.city
+        fill_in :state, with: user.state
+        fill_in :zip, with: user.zip
+
+        click_on 'Create Order'
+        
+        order = Order.last
+
+        expect(page).to have_content("Price: $#{tire.actual_price(order)}")
+        expect(page).to have_content("Quantity: #{tire.quantity_in(order)}")
+        expect(page).to have_content("Total: $#{order.grandtotal}")
       end
     end
   end

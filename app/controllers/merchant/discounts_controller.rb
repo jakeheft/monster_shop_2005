@@ -4,14 +4,14 @@ class Merchant::DiscountsController < Merchant::BaseController
   end
 
   def new
-    # merchant = current_user.merchant
-    # # require "pry"; binding.pry
-    # @discount = merchant.discounts.new
+    merchant = current_user.merchant
+    @discount = merchant.discounts.new
   end
 
   def create
     merchant = current_user.merchant
-    discount = merchant.discounts.new(discount_params)
+    ### remove 'new' from new_discount_params when all forms on form tags
+    discount = merchant.discounts.new(new_discount_params)
     if discount.valid_attributes?
       discount.save
       redirect_to '/merchant/discounts', notice: "Your discount has successfully been created"
@@ -27,7 +27,7 @@ class Merchant::DiscountsController < Merchant::BaseController
 
   def update
     discount = Discount.find(params[:id])
-    discount.assign_attributes(discount_params)
+    discount.assign_attributes(new_discount_params)
     if discount.valid_attributes?
       discount.save
       redirect_to '/merchant/discounts', notice: "Your discount has been updated"
@@ -41,13 +41,15 @@ class Merchant::DiscountsController < Merchant::BaseController
     discount = Discount.find(params[:id])
     if discount.destroy
       redirect_to '/merchant/discounts', notice: "Discount has been deleted"
-    else
-      redirect_to '/merchant/discounts', notice: "Discount has NOT been deleted"
     end
   end
 
   private
   def discount_params
     params.permit(:percent, :min_qty)
+  end
+
+  def new_discount_params
+    params.require(:discount).permit(:percent, :min_qty)
   end
 end

@@ -1,29 +1,32 @@
+<h2>Order Number: <%= @order.id %></h2>
 <% @order.items_by_merchant(current_user.merchant_id).each do |item| %>
-  <% if item.order_quantity(@order.id) <= item.inventory && item.status(@order.id) == "Pending" %>
-    <%= link_to "#{item.name}", "/merchant/items/#{item.id}" %>
-    <%= link_to "Fulfill #{item.name}", "/merchant/itemorders/#{item.order_item(@order.id)}?order_id=#{@order.id}", method: "patch" %>
-    <img src = "<%= item.image  %>">
-    <%= item.price  %>
-    <%= item.order_quantity(@order.id) %>
-    <%= item.status(@order.id) %>
+  <div id="item-<%= item.id %>">
+    <% if item.order_quantity(@order.id) <= item.inventory && item.status(@order.id) == "Pending" %>
+      <p>Item: <%= link_to "#{item.name}", "/merchant/items/#{item.id}" %> &nbsp&nbsp&nbsp
+      <%= link_to "Fulfill #{item.name}", "/merchant/itemorders/#{item.order_item(@order.id)}?order_id=#{@order.id}", method: "patch" %></p>
+      <img src = "<%= item.image  %>">
+      <p>Price: <%= number_to_currency(item.actual_price(@order))  %></p>
+      <p>Quantity: <%= item.order_quantity(@order.id) %></p>
+      <p>Order Status: <%= item.status(@order.id) %></p>
 
-  <% elsif item.status(@order.id) == "Fulfilled" %>
-   <%= item.name %>
-    <img src = "<%= item.image  %>">
-    <%= item.price  %>
-    <%= item.order_quantity(@order.id) %>
-    <h5> <%= "#{item.name} has been fulfilled" %> </h5>
+    <% elsif item.status(@order.id) == "Fulfilled" %>
+     <%= item.name %>
+      <img src = "<%= item.image  %>">
+      <%= item.price  %>
+      <%= item.order_quantity(@order.id) %>
+      <h5> <%= "#{item.name} has been fulfilled" %> </h5>
 
- <% elsif item.order_quantity(@order.id) >= item.inventory && item.status(@order.id) == "Pending" %>
-    <%= item.name %>
-    <img src = "<%= item.image  %>">
-    <%= item.price  %>
-    <%= item.order_quantity(@order.id) %>
-    <h5> <%= item.name %> Can't fullfill - Not enough items in inventory </h5>
+    <% elsif item.order_quantity(@order.id) >= item.inventory && item.status(@order.id) == "Pending" %>
+      <%= item.name %>
+      <img src = "<%= item.image  %>">
+      <%= item.price  %>
+      <%= item.order_quantity(@order.id) %>
+      <h5> <%= item.name %> Can't fullfill - Not enough items in inventory </h5>
 
     <% else %>
-    <%= item.name %>
-    <%= item.price  %>
-    <%= item.order_quantity(@order.id) %>
-  <% end %>
+      <%= item.name %>
+      <%= item.price  %>
+      <%= item.order_quantity(@order.id) %>
+    <% end %>
+  </div>
 <% end %>

@@ -247,4 +247,47 @@ describe Order, type: :model do
       expect(order_1.status).to eq('Packaged')
     end
   end
+
+  describe 'instance methods (without before each block)' do
+    it '#create_item_orders' do
+      meg = Merchant.create!(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80_203)
+      user = User.create!(name: 'JakeBob',
+        address: '124 Main St',
+        city: 'Denver',
+        state: 'Colorado',
+        zip: '80202',
+        email: 'Bob1234@hotmail.com',
+        password: 'heftybags',
+        password_confirmation: 'heftybags',
+        role: 0
+      )
+      tire = meg.items.create!(name: 'Gatorskins', description: "They'll never pop!", price: 100, image: 'https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588', inventory: 1200)
+      horn = meg.items.create!(name: 'Bike Horn', description: "Honk it out!", price: 100, image: 'https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588', inventory: 1200)
+      discount = meg.discounts.create!(
+        percent: 25,
+        min_qty: 5
+      )
+      cart = Cart.new({
+        horn.id.to_s => 1,
+        tire.id.to_s => 5
+        })
+      order = Order.create!(name: 'Meg', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Pending')
+
+      expect(ItemOrder.all).to eq([])
+
+      order.create_item_orders(cart)
+
+      item_order_1 = order.item_orders.where('item_id = ?', tire.id)
+      item_order_2 = order.item_orders.where('item_id = ?', horn.id)
+
+      expect(item_order_1.last.order_id).to eq(order.id)
+      expect(item_order_1.last.item_id).to eq(tire.id)
+      expect(item_order_1.last.price).to eq(75)
+      expect(item_order_1.last.quantity).to eq(5)
+      expect(item_order_2.last.order_id).to eq(order.id)
+      expect(item_order_2.last.item_id).to eq(horn.id)
+      expect(item_order_2.last.price).to eq(100)
+      expect(item_order_2.last.quantity).to eq(1)
+    end
+  end
 end

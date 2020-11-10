@@ -9,9 +9,11 @@
     <h4>Items in Order:  <%=  order.count_items %></h4>
       <% order.items.each do |item| %>
         <ul>
-          <li align ="left">Item: <%= item.name %>&nbsp&nbsp&nbsp&nbsp Price: $<%= item.price %></li>
+          <li align ="left">Item: <%= item.name %>&nbsp&nbsp&nbsp&nbsp
+            Price: <%= number_to_currency(item.actual_price(order)) %>&nbsp&nbsp&nbsp&nbsp
+            Quantity: <%= item.quantity_in(order) %></li>
         </ul>
       <% end %>
-    <h4>Total: $<%= order.grandtotal %></h4><br>
+    <h4>Total: <%= number_to_currency(order.grandtotal) %></h4><br>
   </section>
 <% end %>
