@@ -247,4 +247,38 @@ describe Order, type: :model do
       expect(order_1.status).to eq('Packaged')
     end
   end
+  
+  describe 'instance methods (without before each block)' do
+    it '#create_item_orders' do
+      meg = Merchant.create!(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80_203)
+      user = User.create!(name: 'JakeBob',
+        address: '124 Main St',
+        city: 'Denver',
+        state: 'Colorado',
+        zip: '80202',
+        email: 'Bob1234@hotmail.com',
+        password: 'heftybags',
+        password_confirmation: 'heftybags',
+        role: 0
+      )
+      tire = meg.items.create!(name: 'Gatorskins', description: "They'll never pop!", price: 100, image: 'https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588', inventory: 1200)
+      discount = meg.discounts.create!(
+        percent: 25,
+        min_qty: 5
+      )
+      cart = Cart.new({
+        tire.id.to_s => 5,
+        })
+      order = Order.create!(name: 'Meg', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Pending')
+
+      expect(ItemOrder.last).to eq(nil)
+
+      order.create_item_orders(cart)
+
+      expect(ItemOrder.last.order_id).to eq(order.id)
+      expect(ItemOrder.last.item_id).to eq(tire.id)
+      expect(ItemOrder.last.price).to eq(75)
+      expect(ItemOrder.last.quantity).to eq(5)
+    end
+  end
 end
