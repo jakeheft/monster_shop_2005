@@ -194,9 +194,12 @@ describe "As a user" do
         fill_in :zip, with: user.zip
 
         click_on 'Create Order'
+        
+        order = Order.last
 
-        new_order = Order.last
-        item_order = ItemOrder.last
+        expect(page).to have_content("Price: $#{tire.actual_price(order)}")
+        expect(page).to have_content("Quantity: #{tire.quantity_in(order)}")
+        expect(page).to have_content("Total: $#{order.grandtotal}")
       end
     end
   end
