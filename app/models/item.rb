@@ -50,6 +50,6 @@ class Item <ApplicationRecord
   end
 
   def actual_price(order)
-    ItemOrder.where('item_id = ?', id).pluck(:price).first
+    ItemOrder.where('item_id = ?', id).where('order_id = ?', order.id).pluck(:price).first
   end
 end

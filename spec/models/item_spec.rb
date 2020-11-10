@@ -192,10 +192,13 @@ describe Item, type: :model do
         min_qty: 5
       )
       order = Order.create!(name: 'Meg', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Pending')
+      order_2 = Order.create!(name: 'Meg', address: '123 Stang St', city: 'Hershey', state: 'PA', zip: 80_218, user_id: user.id, status: 'Pending')
       order_item_1 = order.item_orders.create!(item: tire, price: 75, quantity: 5, status: 'Pending', merchant_id: meg.id)
-      order_item_1 = order.item_orders.create!(item: horn, price: horn.price, quantity: 1, status: 'Pending', merchant_id: meg.id)
+      order_item_2 = order.item_orders.create!(item: horn, price: horn.price, quantity: 1, status: 'Pending', merchant_id: meg.id)
+      order_item_3 = order_2.item_orders.create!(item: tire, price: 100, quantity: 5, status: 'Pending', merchant_id: meg.id)
 
       expect(tire.actual_price(order)).to eq(75)
+      expect(tire.actual_price(order_2)).to eq(100)
       expect(horn.actual_price(order)).to eq(100)
     end
 
