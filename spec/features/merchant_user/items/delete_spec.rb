@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 RSpec.describe 'Merchant Items Index Page' do
   describe 'When I visit the merchant items page' do
     before(:each) do
@@ -21,7 +19,7 @@ RSpec.describe 'Merchant Items Index Page' do
                                role: 1)
       order = Order.create!(name: 'JakeBob', address: '124 Main St', city: 'Denver', state: 'Colorado', zip: '80202', user_id: user.id)
       order.item_orders.create!(item_id: @tire.id, price: @tire.price, quantity: 10, merchant_id: @meg.id)
-      
+
       visit '/login'
 
       fill_in :email, with: 'JBob1234@hotmail.com'

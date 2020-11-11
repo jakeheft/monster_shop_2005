@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class ProfileOrdersController < ApplicationController
   def index; end
 

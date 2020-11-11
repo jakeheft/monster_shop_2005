@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe 'Cart show' do
@@ -149,7 +147,7 @@ RSpec.describe 'Cart show' do
         tire = meg.items.create(name: 'Gatorskins', description: "They'll never pop!", price: 100, image: 'https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588', inventory: 1200)
         discount = meg.discounts.create!(
           percent: 25,
-          min_qty: 100
+          min_qty: 10
         )
 
         visit '/login'
@@ -164,9 +162,9 @@ RSpec.describe 'Cart show' do
         click_link 'Cart'
 
         within "#cart-item-#{tire.id}" do
-          99.times { click_on '+' }
-          expect(page).to have_content(100)
-          expect(page).to have_content("$7,500.00")
+          9.times { click_on '+' }
+          expect(page).to have_content(10)
+          expect(page).to have_content("$750.00")
         end
         expect(page).to have_content("A bulk discount has been applied to #{tire.name}!")
       end

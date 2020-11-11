@@ -64,13 +64,17 @@ describe "As a merchant employee" do
         percent: 10,
         min_qty: 10
       )
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_user)
-# for some reason, a discount does not delete in the test but works in prod. When I enter discount.reload after the deletion, I get an error that says it can't find discount by that id which tells me it is being delete
+      visit "/login"
+
+      fill_in :email, with: "Bob1234@hotmail.com"
+      fill_in :password, with: "heftybags"
+      click_button "Login"
+
       visit "/merchant/discounts"
       click_button "Delete Discount"
       expect(current_path).to eq('/merchant/discounts')
-      # expect(page).to_not have_content(discount.min_qty)
-      # expect(page).to_not have_content(discount.percent)
+      expect(page).to_not have_content(discount.min_qty)
+      expect(page).to_not have_content(discount.percent)
     end
 
     it "A merchant can have multiple discounts in the system" do

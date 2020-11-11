@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Order < ApplicationRecord
   validates_presence_of :name, :address, :city, :state, :zip
 
@@ -47,24 +45,14 @@ class Order < ApplicationRecord
 
   def create_item_orders(cart)
     cart.items.each do |item, quantity|
-      if cart.apply_discount?(item)
-        discount = cart.discount_selection(item).percent
-        item_orders.create(
-          item: item,
-          quantity: quantity,
-          price: cart.discounted_price(item, discount),
-          merchant_id: item.merchant.id,
-          status: "Pending"
-        )
-      else
-        item_orders.create(
-          item: item,
-          quantity: quantity,
-          price: item.price,
-          merchant_id: item.merchant.id,
-          status: "Pending"
-        )
-      end
+      discount = cart.item_discount(item)
+      item_orders.create(
+        item: item,
+        quantity: quantity,
+        price: cart.discounted_price(item, discount),
+        merchant_id: item.merchant.id,
+        status: "Pending"
+      )
     end
   end
 end

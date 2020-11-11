@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class ReviewsController < ApplicationController
   def new
     @item = Item.find(params[:item_id])

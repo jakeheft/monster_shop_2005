@@ -18,9 +18,7 @@ describe "As a merchant employee" do
 
       visit '/merchant/discounts/new'
 
-      # fill_in "discount[percent]", with: 10
       fill_in "Percent", with: 10
-      # fill_in "discount[min_qty]", with: 5
       fill_in "Minimum Quantity", with: 5
 
       click_button "Create Discount"

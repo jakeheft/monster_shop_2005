@@ -47,7 +47,6 @@ RSpec.describe "As a admin" do
         role: 0
 
       )
-      # allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       visit "/login"
 
       fill_in :email, with: "JBob1234@hotmail.com"
@@ -82,7 +81,7 @@ RSpec.describe "As a admin" do
       click_button "Create Order"
 
       visit "/merchants/#{meg.id}"
-      # expect(page).to_not have_link("Delete Merchant")
+      expect(page).to_not have_link("Delete Merchant")
 
 
       visit "/merchants/#{brian.id}"
