@@ -176,5 +176,32 @@ RSpec.describe Cart do
       expect { tire.quantity }.to raise_error(NoMethodError)
       expect(cart.quantity_of(tire)).to eq(5)
     end
+
+    it '#price_of()' do
+      meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80_203)
+      user = User.create!(name: 'JakeBob',
+        address: '124 Main St',
+        city: 'Denver',
+        state: 'Colorado',
+        zip: '80202',
+        email: 'Bob12@hotmail.com',
+        password: 'heftybags',
+        password_confirmation: 'heftybags',
+        role: 0
+      )
+      tire = meg.items.create(name: 'Gatorskins', description: "They'll never pop!", price: 100, image: 'https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588', inventory: 1200)
+      horn = meg.items.create(name: 'Horn', description: "It honks", price: 100, image: 'https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588', inventory: 1200)
+      discount = meg.discounts.create!(
+        percent: 25,
+        min_qty: 5
+      )
+      cart = Cart.new({
+        tire.id.to_s => 5,
+        horn.id.to_s => 1
+        })
+
+      expect(cart.price_of(tire)).to eq(75)
+      expect(cart.price_of(horn)).to eq(100)
+    end
   end
 end
