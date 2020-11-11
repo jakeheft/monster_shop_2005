@@ -32,32 +32,33 @@ class Cart
   end
 
   def subtotal(item)
-    if apply_discount?(item)
-      discount = discount_selection(item, item.merchant).percent
-      discounted_price(item, discount) * @contents[item.id.to_s]
+    price_of(item) * @contents[item.id.to_s]
+  end
+
+  def price_of(item)
+    if discount_selection(item) == nil
+      item.price
     else
-      item.price * @contents[item.id.to_s]
+      (1 - discount_selection(item).percent / 100) * item.price
     end
   end
 
   def total
-    items = Item.find(@contents.keys)
+    items = Item.where(id: @contents.keys)
     items.sum do |item|
       subtotal(item)
     end
   end
 
   def apply_discount?(item)
-    merchant = Merchant.select('merchants.*').joins(:items).where('items.id = ?', item).first
-    merchant.discounts.where('min_qty <= ?', quantity_of(item)) != []
+    item.merchant.discounts.where('min_qty <= ?', quantity_of(item)) != []
   end
 
-  def discount_selection(item, merchant = item.merchant)
-    merchant.discounts.where('min_qty <= ?', quantity_of(item)).order('percent DESC').first
+  def discount_selection(item)
+    item.merchant.discounts.where('min_qty <= ?', quantity_of(item)).order('percent DESC').first
   end
 
   def quantity_of(item)
     @contents[item.id.to_s]
   end
-
 end
