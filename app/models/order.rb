@@ -45,24 +45,14 @@ class Order < ApplicationRecord
 
   def create_item_orders(cart)
     cart.items.each do |item, quantity|
-      discount = cart.discount_selection(item)
-      if discount != nil
-        item_orders.create(
-          item: item,
-          quantity: quantity,
-          price: cart.discounted_price(item, discount.percent),
-          merchant_id: item.merchant.id,
-          status: "Pending"
-        )
-      else
-        item_orders.create(
-          item: item,
-          quantity: quantity,
-          price: item.price,
-          merchant_id: item.merchant.id,
-          status: "Pending"
-        )
-      end
+      discount = cart.item_discount(item)
+      item_orders.create(
+        item: item,
+        quantity: quantity,
+        price: cart.discounted_price(item, discount),
+        merchant_id: item.merchant.id,
+        status: "Pending"
+      )
     end
   end
 end

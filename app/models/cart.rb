@@ -36,11 +36,7 @@ class Cart
   end
 
   def price_of(item)
-    if discount_selection(item) == nil
-      item.price
-    else
-      (1 - discount_selection(item).percent / 100) * item.price
-    end
+      (1 - item_discount(item) / 100) * item.price
   end
 
   def total
@@ -50,8 +46,13 @@ class Cart
     end
   end
 
-  def discount_selection(item)
-    item.merchant.discounts.where('min_qty <= ?', quantity_of(item)).order('percent DESC').first
+  def item_discount(item)
+    discount = item.merchant.discounts.where('min_qty <= ?', quantity_of(item)).order('percent DESC').first
+    if discount == nil
+      0
+    else
+      discount.percent
+    end
   end
 
   def quantity_of(item)

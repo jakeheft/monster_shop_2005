@@ -64,7 +64,7 @@ RSpec.describe Cart do
       expect(cart.subtotal(bear)).to eq(1800)
     end
 
-    it '#discount_selection()' do
+    it '#item_discount()' do
       discount_1 = @megan.discounts.create!(
         percent: 10,
         min_qty: 100
@@ -95,12 +95,12 @@ RSpec.describe Cart do
         fairy.id.to_s => 100
         })
 
-      expect(cart.discount_selection(@ogre)).to eq(nil)
-      expect(cart.discount_selection(@giant)).to eq(discount_1)
-      expect(cart.discount_selection(@hippo)).to eq(discount_3)
-      expect(cart.discount_selection(bear)).to eq(discount_2)
-      expect(cart.discount_selection(unicorn)).to eq(discount_3)
-      expect(cart.discount_selection(fairy)).to eq(nil)
+      expect(cart.item_discount(@ogre)).to eq(0)
+      expect(cart.item_discount(@giant)).to eq(10)
+      expect(cart.item_discount(@hippo)).to eq(30)
+      expect(cart.item_discount(bear)).to eq(20)
+      expect(cart.item_discount(unicorn)).to eq(30)
+      expect(cart.item_discount(fairy)).to eq(0)
     end
 
     it '#discounted_price()' do
