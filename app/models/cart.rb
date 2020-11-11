@@ -50,10 +50,6 @@ class Cart
     end
   end
 
-  def apply_discount?(item)
-    item.merchant.discounts.where('min_qty <= ?', quantity_of(item)) != []
-  end
-
   def discount_selection(item)
     item.merchant.discounts.where('min_qty <= ?', quantity_of(item)).order('percent DESC').first
   end
