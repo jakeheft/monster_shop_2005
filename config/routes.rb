@@ -58,9 +58,10 @@ Rails.application.routes.draw do
   get "/profile/edit", to: "users_dashboard#edit"
   patch "/profile", to: "users_dashboard#update"
 
-  get '/profile/orders', to: "profile_orders#index"
-  get '/profile/orders/:id', to: "profile_orders#show"
-  patch "/profile/orders/:id", to: "profile_orders#cancel"
+  namespace :profile do
+    resources :orders, only: %i[index show]
+    patch "/orders/:id", to: "orders#cancel"
+  end
 
   get "/password/edit", to: "passwords#edit"
   patch "/password", to: "passwords#update"

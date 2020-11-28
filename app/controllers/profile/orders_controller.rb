@@ -1,4 +1,4 @@
-class ProfileOrdersController < ApplicationController
+class Profile::OrdersController < Profile::BaseController
   def index; end
 
   def show
