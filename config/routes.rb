@@ -54,11 +54,10 @@ Rails.application.routes.draw do
 
   get "/register", to: "users#new"
 
-  get "/profile", to: "users_dashboard#show"
-  get "/profile/edit", to: "users_dashboard#edit"
-  patch "/profile", to: "users_dashboard#update"
-
   namespace :profile do
+    get "/", to: "users_dashboard#show"
+    get "/edit", to: "users_dashboard#edit"
+    patch "/", to: "users_dashboard#update"
     resources :orders, only: %i[index show]
     patch "/orders/:id", to: "orders#cancel"
   end

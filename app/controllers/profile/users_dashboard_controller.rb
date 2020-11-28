@@ -1,4 +1,4 @@
-class UsersDashboardController < UserBaseController
+class Profile::UsersDashboardController < Profile::BaseController
   def show; end
 
   def edit; end
