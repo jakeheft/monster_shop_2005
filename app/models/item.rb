@@ -50,10 +50,10 @@ class Item <ApplicationRecord
   end
 
   def actual_price(order)
-    ItemOrder.where('item_id = ?', id).where('order_id = ?', order.id).pluck(:price).first
+    item_orders.where('order_id = ?', order.id).pluck(:price).first
   end
 
   def quantity_in(order)
-    ItemOrder.where('item_id = ?', id).where('order_id = ?', order.id).pluck(:quantity).first
+    item_orders.where('order_id = ?', order.id).pluck(:quantity).first
   end
 end
