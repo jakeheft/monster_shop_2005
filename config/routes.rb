@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :merchants
 
-  resources :items, only: %i[index show edit update destroy]
+  resources :items, except: %i[new create]
 
   resources :merchants do
     resources :items
@@ -54,7 +54,6 @@ Rails.application.routes.draw do
 
   get "/register", to: "users#new"
 
-
   get "/profile", to: "users_dashboard#show"
   get "/profile/edit", to: "users_dashboard#edit"
   patch "/profile", to: "users_dashboard#update"
@@ -63,11 +62,8 @@ Rails.application.routes.draw do
   get '/profile/orders/:id', to: "profile_orders#show"
   patch "/profile/orders/:id", to: "profile_orders#cancel"
 
-
   get "/password/edit", to: "passwords#edit"
   patch "/password", to: "passwords#update"
-
-
 
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
